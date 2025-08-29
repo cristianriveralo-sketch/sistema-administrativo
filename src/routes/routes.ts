@@ -109,7 +109,7 @@ router.patch("/api/productoxventas/:id", productoXVentaController.updateProducto
 router.delete("/api/productoxventas/:id", productoXVentaController.deleteProductoXVenta);
 
 // --- Pais ---
-router.get("/api/pais", paisController.getAllPais);
+router.get("/api/pais", paisController.getAllPaiss);
 router.get("/api/pais/:id", paisController.getPaisById);
 router.post("/api/pais", paisController.createPais);
 router.patch("/api/pais/:id", paisController.updatePais);
