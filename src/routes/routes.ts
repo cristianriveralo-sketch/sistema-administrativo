@@ -1,4 +1,4 @@
-/* import { Router } from "express";
+import { Router } from "express";
 
 import * as categoriaController from "../controllers/categoria.controller";
 import * as personaController from "../controllers/persona.controller";
@@ -6,22 +6,24 @@ import * as clienteController from "../controllers/cliente.controller";
 import * as usuarioController from "../controllers/usuario.controller";
 import * as productoController from "../controllers/producto.controller";
 import * as tallaController from "../controllers/talla.controller";
-import * as productoXTallaController from "../controllers/producto_x_talla.controller";
-import * as proveedorController from "../controllers/proverdor.controller";
+import * as proveedorController from "../controllers/proveedor.controller";
 import * as compraController from "../controllers/compra.controller";
 import * as productoXCompraController from "../controllers/producto_x_compra.controller";
 import * as ventaController from "../controllers/venta.controller";
 import * as productoXVentaController from "../controllers/producto_x_venta.controller";
 import * as paisController from "../controllers/pais.controller";
+import * as colorController from "../controllers/color.controller";
+import * as productoCompletoController from "../controllers/producto_x_completo.controller";
+
 
 const router = Router();
 
 // --- Categoría ---
-router.get("/api/categorias", categoriaController.getAllCategorias);
-router.get("/api/categorias/:id", categoriaController.getCategoriaById);
-router.post("/api/categorias", categoriaController.createCategoria);
-router.patch("/api/categorias/:id", categoriaController.updateCategoria);
-router.delete("/api/categorias/:id", categoriaController.deleteCategoria);
+router.get("/api/categoria", categoriaController.getAllCategorias);
+router.get("/api/categoria/:id", categoriaController.getCategoriaById);
+router.post("/api/categoria", categoriaController.createCategoria);
+router.patch("/api/categoria/:id", categoriaController.updateCategoria);
+router.delete("/api/categoria/:id", categoriaController.deleteCategoria);
 
 // --- Persona ---
 router.get("/api/personas", personaController.getAllPersonas);
@@ -37,6 +39,13 @@ router.post("/api/clientes", clienteController.createCliente);
 router.patch("/api/clientes/:id", clienteController.updateCliente);
 router.delete("/api/clientes/:id", clienteController.deleteCliente);
 
+// --- color ---
+router.get("/api/colors", colorController.getAllColors);
+router.get("/api/colors/:id", colorController.getColorById);
+router.post("/api/colors", colorController.createColor);
+router.patch("/api/colors/:id", colorController.updateColor);
+router.delete("/api/colors/:id", colorController.deleteColor);
+
 // --- Usuario ---
 router.get("/api/usuarios", usuarioController.getAllUsuarios);
 router.get("/api/usuarios/:id", usuarioController.getUsuarioById);
@@ -51,19 +60,18 @@ router.post("/api/productos", productoController.createProducto);
 router.patch("/api/productos/:id", productoController.updateProducto);
 router.delete("/api/productos/:id", productoController.deleteProducto);
 
+// --- Producto Completo ---
+router.get("/api/productocompletos", productoCompletoController.getAllProductoCompletos);
+router.get("/api/productocompletos/:id", productoCompletoController.getProductoCompletoById);
+router.post("/api/productocompletos", productoCompletoController.createProductoCompleto);
+router.patch("/api/productocompletos/:id", productoCompletoController.updateProductoCompleto);
+router.delete("/api/productocompletos/:id", productoCompletoController.deleteProductoCompleto);
 // --- Talla ---
 router.get("/api/tallas", tallaController.getAllTallas);
 router.get("/api/tallas/:id", tallaController.getTallaById);
 router.post("/api/tallas", tallaController.createTalla);
 router.patch("/api/tallas/:id", tallaController.updateTalla);
 router.delete("/api/tallas/:id", tallaController.deleteTalla);
-
-// --- ProductoXTalla ---
-router.get("/api/productoxtallas", productoXTallaController.getAllProductoXTallas);
-router.get("/api/productoxtallas/:id", productoXTallaController.getProductoXTallaById);
-router.post("/api/productoxtallas", productoXTallaController.createProductoXTalla);
-router.patch("/api/productoxtallas/:id", productoXTallaController.updateProductoXTalla);
-router.delete("/api/productoxtallas/:id", productoXTallaController.deleteProductoXTalla);
 
 // --- Proveedor ---
 router.get("/api/proveedores", proveedorController.getAllProveedores);
@@ -109,4 +117,3 @@ router.delete("/api/pais/:id", paisController.deletePais);
 
 export default router;
 
- */

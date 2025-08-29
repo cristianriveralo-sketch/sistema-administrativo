@@ -52,3 +52,4 @@ export const deleteCategoria = async (id: string) => {
     throw error;
   }
 };
+ 

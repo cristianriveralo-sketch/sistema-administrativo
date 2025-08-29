@@ -8,10 +8,10 @@ import { Color } from "./color.model";
 import { Talla } from "./talla.model";
 import { ProductoCompleto } from "./producto_x_completo.model";
 import { Venta } from "./venta.model";
-import { ArticuloVenta } from "./articulo_x_venta.model";
+import { ArticuloVenta } from "./producto_x_venta.model";
 import { Proveedor } from "./proveedor.model";
 import { Compra } from "./compra_inventario.model";
-import { ArticuloCompra } from "./articulo_x_compra.model";
+import { ArticuloCompra } from "./producto_x_compra.model";
 
 // 🔹 Relaciones
 Pais.hasMany(Usuario, { foreignKey: "id_pais" });

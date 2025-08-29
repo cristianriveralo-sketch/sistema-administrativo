@@ -1,27 +1,27 @@
 # TODO: CATEGORIAS ENDPOINTS
 # Obtener todas las categorías
-GET http://localhost:3000/api/categorias HTTP/1.1
+GET http://localhost:3000/api/categoria HTTP/1.1
 
 ###
 
 # Obtener una categoría por ID
-GET http://localhost:3000/api/categorias/1 HTTP/1.1
+GET http://localhost:3000/api/categoria/1 HTTP/1.1
 
 ###
 
 # Crear una nueva categoría
-POST http://localhost:3000/api/categorias HTTP/1.1
+POST http://localhost:3000/api/categoria HTTP/1.1
 Content-Type: application/json
 
 {
-   "nombre": "zapatos",
+  "nombre": "zapatos",
   "descripcion": "Categoría de zapatos para hombre y mujer"
 }
 
 ###
 
 # Actualizar una categoría (PATCH)
-PATCH http://localhost:3000/api/categorias/3 HTTP/1.1
+PATCH http://localhost:3000/api/categoria/3 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -32,7 +32,7 @@ Content-Type: application/json
 ###
 
 # Eliminar una categoría
-DELETE http://localhost:3000/api/categorias/3 HTTP/1.1
+DELETE http://localhost:3000/api/categoria/3 HTTP/1.1
 
 ###
 

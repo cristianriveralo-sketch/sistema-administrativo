@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import sequelize from "./config/database";
-//import routes from "./routes/routes";
+import routes from "./routes/routes";
 // executes index.ts and registers all created models
 import "./models";
 
@@ -16,7 +16,7 @@ app.use(express.json());
 const port = Number(process.env.PORT) || 3000;
 
 // routes
-//app.use(routes);
+app.use(routes);
 
 app.listen(port, async () => {
   console.log(`Server is running on port ${port}`);
