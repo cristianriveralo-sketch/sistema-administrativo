@@ -1,0 +1,73 @@
+# TODO: CATEGORIAS ENDPOINTS
+# Obtener todas las categorías
+GET http://localhost:3000/api/categorias HTTP/1.1
+
+###
+
+# Obtener una categoría por ID
+GET http://localhost:3000/api/categorias/1 HTTP/1.1
+
+###
+
+# Crear una nueva categoría
+POST http://localhost:3000/api/categorias HTTP/1.1
+Content-Type: application/json
+
+{
+   "nombre": "zapatos",
+  "descripcion": "Categoría de zapatos para hombre y mujer"
+}
+
+###
+
+# Actualizar una categoría (PATCH)
+PATCH http://localhost:3000/api/categorias/3 HTTP/1.1
+Content-Type: application/json
+
+{
+   "nombre": "pantalonetas",
+  "descripcion": "Categoría de pantalonetas para hombre y mujer"
+}
+
+###
+
+# Eliminar una categoría
+DELETE http://localhost:3000/api/categorias/3 HTTP/1.1
+
+###
+
+# TODO: PAISES ENDPOINTS
+# Obtener todos los países
+GET http://localhost:3000/api/pais HTTP/1.1
+
+###
+
+# Obtener un país por ID
+GET http://localhost:3000/api/pais/1 HTTP/1.1
+
+###
+
+# Crear un nuevo país
+POST http://localhost:3000/api/pais HTTP/1.1
+Content-Type: application/json
+
+{
+  "nombre": "Mexico",
+  "codigo": "MX"
+}
+
+###
+
+# Actualizar un país (PATCH)
+PATCH http://localhost:3000/api/pais/2 HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "nombre": "Estados Unidos",
+  "codigo": "US"
+}
+
+###
+
+# Eliminar un país
+DELETE http://localhost:3000/api/pais/2 HTTP/1.1
