@@ -1,24 +1,61 @@
 import { Request, Response } from "express";
+import * as usuarioService from "../services/usuario.service";
 
+// Obtener todos los usuarios
 export const getAllUsuarios = async (req: Request, res: Response) => {
-  res.json({ message: "Lista de usuarios" });
+  try {
+    const usuarios = await usuarioService.getAllUsuarios();
+    res.json(usuarios);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener usuarios" });
+  }
 };
 
+// Obtener usuario por ID
 export const getUsuarioById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  res.json({ message: `Usuario ${id}` });
+  try {
+    const usuario = await usuarioService.getUsuarioById(id);
+    if (!usuario) return res.status(404).json({ message: "Usuario no encontrado" });
+    res.json(usuario);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener usuario" });
+  }
 };
 
+// Crear usuario + persona
 export const createUsuario = async (req: Request, res: Response) => {
-  res.json({ message: "Usuario creado", data: req.body });
+  try {
+    const result = await usuarioService.createUsuario(req.body);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al crear usuario y persona" });
+  }
 };
 
+// Actualizar usuario
 export const updateUsuario = async (req: Request, res: Response) => {
   const { id } = req.params;
-  res.json({ message: `Usuario ${id} actualizado`, data: req.body });
+  try {
+    const usuario = await usuarioService.updateUsuario(id, req.body);
+    res.json(usuario);
+  } catch (error: any) {
+    console.error(error);
+    res.status(404).json({ message: error.message });
+  }
 };
 
+// Eliminar usuario
 export const deleteUsuario = async (req: Request, res: Response) => {
   const { id } = req.params;
-  res.json({ message: `Usuario ${id} eliminado` });
+  try {
+    const result = await usuarioService.deleteUsuario(id);
+    res.json(result);
+  } catch (error: any) {
+    console.error(error);
+    res.status(404).json({ message: error.message });
+  }
 };

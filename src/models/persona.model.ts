@@ -10,6 +10,7 @@ interface PersonaAttributes {
   telefono: number;
   ciudad: string;
   edad: number;
+  id_pais: number;   
 }
 
 interface PersonaCreationAttributes extends Optional<PersonaAttributes, "id_persona"> {}
@@ -24,6 +25,7 @@ export class Persona extends Model<PersonaAttributes, PersonaCreationAttributes>
   public telefono!: number;
   public ciudad!: string;
   public edad!: number;
+  public id_pais!: number;
 }
 
 Persona.init(
@@ -36,6 +38,14 @@ Persona.init(
     telefono: { type: DataTypes.INTEGER },
     ciudad: { type: DataTypes.STRING(25) },
     edad: { type: DataTypes.INTEGER },
+    id_pais: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      references: { model: "pais", key: "id_pais" },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    }
   },
   { sequelize, tableName: "persona", timestamps: false }
 );
+

@@ -14,9 +14,14 @@ import * as productoXVentaController from "../controllers/producto_x_venta.contr
 import * as paisController from "../controllers/pais.controller";
 import * as colorController from "../controllers/color.controller";
 import * as productoCompletoController from "../controllers/producto_x_completo.controller";
+import * as authController from "../controllers/auth.controller";
 
 
 const router = Router();
+
+
+//login
+router.post("/api/login", authController.login);
 
 // --- Categoría ---
 router.get("/api/categoria", categoriaController.getAllCategorias);
@@ -47,11 +52,11 @@ router.patch("/api/colors/:id", colorController.updateColor);
 router.delete("/api/colors/:id", colorController.deleteColor);
 
 // --- Usuario ---
-router.get("/api/usuarios", usuarioController.getAllUsuarios);
-router.get("/api/usuarios/:id", usuarioController.getUsuarioById);
-router.post("/api/usuarios", usuarioController.createUsuario);
-router.patch("/api/usuarios/:id", usuarioController.updateUsuario);
-router.delete("/api/usuarios/:id", usuarioController.deleteUsuario);
+router.get("/api/usuario", usuarioController.getAllUsuarios);
+router.get("/api/usuario/:id", usuarioController.getUsuarioById);
+router.post("/api/usuario", usuarioController.createUsuario);
+router.patch("/api/usuario/:id", usuarioController.updateUsuario);
+router.delete("/api/usuario/:id", usuarioController.deleteUsuario);
 
 // --- Producto ---
 router.get("/api/productos", productoController.getAllProductos);
