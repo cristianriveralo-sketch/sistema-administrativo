@@ -3,20 +3,25 @@ import sequelize from "../config/database";
 
 export class Cliente extends Model {
   public id_cliente!: string;
-  public fecha_registro!: Date;
   public direccion!: string;
-  public id_pais!: number;
   public id_persona!: number;
+  public activo!: boolean;
+  public fecha_creacion!: Date;
+  public fecha_actualizacion!: Date;
 }
 
 Cliente.init(
   {
     id_cliente: { type: DataTypes.CHAR(36), allowNull: false, primaryKey: true },
-    fecha_registro: { type: DataTypes.DATE },
     direccion: { type: DataTypes.STRING(100) },
-    id_pais: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
     id_persona: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+    activo: { type: DataTypes.BOOLEAN, defaultValue: true },
   },
-  { sequelize, tableName: "cliente", timestamps: false }
+  { 
+    sequelize, 
+    tableName: "cliente", 
+    timestamps: true, 
+    createdAt: "fecha_creacion",
+    updatedAt: "fecha_actualizacion" 
+  }
 );
-

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PostLoginUsuario } from "../services/auth.service";
+import { generarToken } from "../utils/jwt";
 
 export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -14,7 +15,8 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Usuario o contraseña incorrectos" });
     }
 
-    res.json({ message: "Login exitoso", usuario });
+    const token = generarToken(usuario);
+    res.json({ message: "Login exitoso", usuario, token });
   } catch (error) {
     res.status(500).json({ message: "Error en login", error });
   }

@@ -38,11 +38,11 @@ router.patch("/api/personas/:id", personaController.updatePersona);
 router.delete("/api/personas/:id", personaController.deletePersona);
 
 // --- Cliente ---
-router.get("/api/clientes", clienteController.getAllClientes);
-router.get("/api/clientes/:id", clienteController.getClienteById);
-router.post("/api/clientes", clienteController.createCliente);
-router.patch("/api/clientes/:id", clienteController.updateCliente);
-router.delete("/api/clientes/:id", clienteController.deleteCliente);
+router.get("/api/cliente", clienteController.getAllClientes);
+router.get("/api/cliente/:id", clienteController.getClienteById);
+router.post("/api/cliente", clienteController.createCliente);
+router.patch("/api/cliente/:id", clienteController.updateCliente);
+router.delete("/api/cliente/:id", clienteController.deleteCliente);
 
 // --- color ---
 router.get("/api/color", colorController.getAllColors);

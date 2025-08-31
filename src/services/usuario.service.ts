@@ -5,6 +5,7 @@ import {
 import { Usuario, Persona } from "../models";
 import { v4 as uuidv4 } from "uuid";
 import sequelize from "../config/database";
+import bcrypt from "bcrypt";
 
 export const getAllUsuarios = async () => {
   try {
@@ -48,10 +49,12 @@ export const createUsuario = async (data: CreateUsuarioDTO) => {
     });
 
     // Crear usuario con el id_persona generado
+    const hashedPassword = await bcrypt.hash(data.usuario.password, 10);
     const usuario = await Usuario.create(
       {
         id_usuario: uuidv4(),
         ...data.usuario,
+        password: hashedPassword,
         id_persona: persona.id_persona,
       },
       { transaction }

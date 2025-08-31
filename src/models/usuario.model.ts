@@ -25,7 +25,7 @@ Usuario.init(
       primaryKey: true,
     },
     username: { type: DataTypes.STRING(20), allowNull: false },
-    password: { type: DataTypes.STRING(20), allowNull: false },
+    password: { type: DataTypes.STRING(100), allowNull: false },
     avatar: { type: DataTypes.STRING(255) },
     activo: { type: DataTypes.BOOLEAN, defaultValue: true },
     id_persona: {

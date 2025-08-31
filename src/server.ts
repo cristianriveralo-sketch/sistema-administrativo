@@ -25,8 +25,8 @@ app.listen(port, async () => {
     console.log(
       `Connection has been established successfully: ${process.env.DB_DATABASE}`
     );
-    
-    await sequelize.sync({ alter: true}); // Use { force: true } to reset tables
+
+    await sequelize.sync({ alter: true }); // Use { force: true } to reset tables
     console.log("📦 Models synchronized successfully");
   } catch (error) {
     console.error("❌ Unable to connect to the database:", error);
