@@ -17,7 +17,7 @@ Compra.init(
       primaryKey: true,
     },
     id_proveedor: {
-      type: DataTypes.CHAR(36),
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true, 
       references: {
         model: "proveedor",

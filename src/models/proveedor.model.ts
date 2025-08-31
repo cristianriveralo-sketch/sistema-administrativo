@@ -2,9 +2,10 @@ import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../config/database";
 
 interface ProveedorAttributes {
-  id_proveedor: string;
-  nombre: string;
+  id_proveedor: number;
+  razon_social: string;
   marca: string;
+  id_persona?: number;
 }
 
 interface ProveedorCreationAttributes
@@ -14,21 +15,29 @@ export class Proveedor
   extends Model<ProveedorAttributes, ProveedorCreationAttributes>
   implements ProveedorAttributes
 {
-  public id_proveedor!: string;
-  public nombre!: string;
+  public id_proveedor!: number;
+  public razon_social!: string;
   public marca!: string;
+  public id_persona?: number;
 }
 
 Proveedor.init(
   {
     id_proveedor: {
-      type: DataTypes.CHAR(36),
-      allowNull: false, 
-      primaryKey: true, 
+      type: DataTypes.INTEGER.UNSIGNED, // ahora numérico
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true, // auto-incrementable
     },
-    nombre: { type: DataTypes.STRING(50), allowNull: false },
+    razon_social: { type: DataTypes.STRING(50), allowNull: false },
     marca: { type: DataTypes.STRING(50), allowNull: false },
+    id_persona: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      references: { model: "persona", key: "id_persona" },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
   },
   { sequelize, tableName: "proveedor", timestamps: false }
 );
-

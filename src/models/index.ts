@@ -1,4 +1,3 @@
-// 📌 Importación de modelos
 import { Pais } from "./pais.model";
 import { Persona } from "./persona.model";
 import { Usuario } from "./usuario.model";
@@ -65,8 +64,17 @@ ProductoCompleto.hasMany(ArticuloVenta, { foreignKey: "id_pxc", onDelete: "CASCA
 ArticuloVenta.belongsTo(ProductoCompleto, { foreignKey: "id_pxc" });
 
 // Proveedor ↔ Compra
-Proveedor.hasMany(Compra, { foreignKey: "id_proveedor" });
-Compra.belongsTo(Proveedor, { foreignKey: "id_proveedor" });
+Proveedor.hasMany(Compra, {
+  foreignKey: "id_proveedor",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+Compra.belongsTo(Proveedor, {
+  foreignKey: "id_proveedor",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
 
 // Usuario ↔ Compra
 Usuario.hasMany(Compra, { foreignKey: "id_usuario" });
@@ -80,7 +88,23 @@ ArticuloCompra.belongsTo(Compra, { foreignKey: "id_compra_inventario" });
 ProductoCompleto.hasMany(ArticuloCompra, { foreignKey: "id_pxc", onDelete: "CASCADE" });
 ArticuloCompra.belongsTo(ProductoCompleto, { foreignKey: "id_pxc" });
 
-// Exportar todos los modelos
+
+// Persona ↔ Proveedor
+Persona.hasOne(Proveedor, {
+  foreignKey: "id_persona",
+  as: "proveedor",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+Proveedor.belongsTo(Persona, {
+  foreignKey: "id_persona",
+  as: "persona",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+
+
 export {
   Pais,
   Persona,

@@ -45,11 +45,11 @@ router.patch("/api/clientes/:id", clienteController.updateCliente);
 router.delete("/api/clientes/:id", clienteController.deleteCliente);
 
 // --- color ---
-router.get("/api/colors", colorController.getAllColors);
-router.get("/api/colors/:id", colorController.getColorById);
-router.post("/api/colors", colorController.createColor);
-router.patch("/api/colors/:id", colorController.updateColor);
-router.delete("/api/colors/:id", colorController.deleteColor);
+router.get("/api/color", colorController.getAllColors);
+router.get("/api/color/:id", colorController.getColorById);
+router.post("/api/color", colorController.createColor);
+router.patch("/api/color/:id", colorController.updateColor);
+router.delete("/api/color/:id", colorController.deleteColor);
 
 // --- Usuario ---
 router.get("/api/usuario", usuarioController.getAllUsuarios);
@@ -72,18 +72,18 @@ router.post("/api/productocompletos", productoCompletoController.createProductoC
 router.patch("/api/productocompletos/:id", productoCompletoController.updateProductoCompleto);
 router.delete("/api/productocompletos/:id", productoCompletoController.deleteProductoCompleto);
 // --- Talla ---
-router.get("/api/tallas", tallaController.getAllTallas);
-router.get("/api/tallas/:id", tallaController.getTallaById);
-router.post("/api/tallas", tallaController.createTalla);
-router.patch("/api/tallas/:id", tallaController.updateTalla);
-router.delete("/api/tallas/:id", tallaController.deleteTalla);
+router.get("/api/talla", tallaController.getAllTallas);
+router.get("/api/talla/:id", tallaController.getTallaById);
+router.post("/api/talla", tallaController.createTalla);
+router.patch("/api/talla/:id", tallaController.updateTalla);
+router.delete("/api/talla/:id", tallaController.deleteTalla);
 
 // --- Proveedor ---
-router.get("/api/proveedores", proveedorController.getAllProveedores);
-router.get("/api/proveedores/:id", proveedorController.getProveedorById);
-router.post("/api/proveedores", proveedorController.createProveedor);
-router.patch("/api/proveedores/:id", proveedorController.updateProveedor);
-router.delete("/api/proveedores/:id", proveedorController.deleteProveedor);
+router.get("/api/proveedor", proveedorController.getAllProveedores);
+router.get("/api/proveedor/:id", proveedorController.getProveedorById);
+router.post("/api/proveedor", proveedorController.createProveedor);
+router.patch("/api/proveedor/:id", proveedorController.updateProveedor);
+router.delete("/api/proveedor/:id", proveedorController.deleteProveedor);
 
 // --- Compra ---
 router.get("/api/compras", compraController.getAllCompras);

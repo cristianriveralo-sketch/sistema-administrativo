@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import sequelize from "./config/database";
 import routes from "./routes/routes";
-// executes index.ts and registers all created models
 import "./models";
 
 dotenv.config();

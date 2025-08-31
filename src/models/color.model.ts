@@ -16,7 +16,7 @@ export class Color extends Model<ColorAttributes, ColorCreationAttributes> imple
 Color.init(
   {
     id_color: { type: DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
-    color: { type: DataTypes.STRING(50) },
+    color: { type: DataTypes.STRING(50),allowNull: false },
   },
   { sequelize, tableName: "color", timestamps: false }
 );

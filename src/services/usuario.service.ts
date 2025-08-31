@@ -32,8 +32,8 @@ export const createUsuario = async (data: CreateUsuarioDTO) => {
   const transaction = await sequelize.transaction();
   try {
     const mapPersonaDTOToModel = (dto: CreateUsuarioDTO["persona"]) => ({
-      nombre: dto.nombres!, 
-      apellido: dto.apellidos!,
+      nombre: dto.nombre!, 
+      apellido: dto.apellido!,
       email: dto.correo!,
       telefono: dto.telefono!,
       genero: dto.genero!,
@@ -83,7 +83,7 @@ export const updateUsuario = async (
       await usuario.update({ ...data.usuario }, { transaction });
     }
 
-    // Actualizar persona asociada
+    // Actualizar persona
     if (data.persona && usuario.getDataValue("persona")) {
       const persona = usuario.getDataValue("persona");
 

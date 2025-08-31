@@ -97,8 +97,8 @@ Content-Type: application/json
     "activo": true
   },
   "persona": {
-    "nombres": "Ana",
-    "apellidos": "Martinez",
+    "nombre": "Ana",
+    "apellido": "Martinez",
     "correo": "ana.martinez@example.com",
     "telefono": 312345678,
     "genero": "F",
@@ -136,14 +136,150 @@ Content-Type: application/json
 
 ###
 # Eliminar un usuario
-DELETE http://localhost:3000/api/usuario/ebd4089c-b4e3-466f-9393-eaf844654057 HTTP/1.1
+DELETE http://localhost:3000/api/usuario/ee0aa912-15c7-4086-9227-05b8b266f5e5 HTTP/1.1
 
 ###
+
+#TODO: LOGIN ENDPOINTS
 # Login
 POST http://localhost:3000/api/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "jose123",
-  "password": "123456"
+  "username": "laura321",
+  "password": "LauraPass2025"
 }
+
+
+###
+# TODO: COLOR ENDPOINTS
+
+GET http://localhost:3000/api/color HTTP/1.1
+
+###
+
+# Obtener una color por ID
+GET http://localhost:3000/api/color/1 HTTP/1.1
+
+###
+
+# Crear una nueva color
+POST http://localhost:3000/api/color HTTP/1.1
+Content-Type: application/json
+
+{
+  "color": "negro"
+}
+
+###
+
+# Actualizar una color (PATCH)
+PATCH http://localhost:3000/api/color/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "color": "gris"
+}
+
+###
+
+# Eliminar una color
+DELETE http://localhost:3000/api/color/2 HTTP/1.1
+
+###
+
+# TODO: TALLA ENDPOINTS
+
+GET http://localhost:3000/api/talla HTTP/1.1
+
+###
+
+# Obtener una talla por ID
+GET http://localhost:3000/api/talla/1 HTTP/1.1
+
+###
+
+# Crear una nueva talla
+POST http://localhost:3000/api/talla HTTP/1.1
+Content-Type: application/json
+
+{
+  "talla": "m"
+}
+
+###
+
+# Actualizar una talla (PATCH)
+PATCH http://localhost:3000/api/talla/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "talla": "l"
+}
+
+###
+
+# Eliminar una talla
+DELETE http://localhost:3000/api/talla/2 HTTP/1.1
+
+###
+# TODO: PROVEEDOR ENDPOINTS
+
+# Obtener todos los proveedores
+GET http://localhost:3000/api/proveedor HTTP/1.1
+
+###
+
+# Obtener un proveedor por ID
+GET http://localhost:3000/api/proveedor/1 HTTP/1.1
+
+###
+
+# Crear un nuevo proveedor
+POST http://localhost:3000/api/proveedor HTTP/1.1
+Content-Type: application/json
+
+{
+  "proveedor": {
+    "razon_social": "Distribuciones ll",
+    "marca": "ll"
+  },
+  "persona": {
+    "nombres": "cristian",
+    "apellidos": "sss",
+    "correo": "cristian.pals@example.com",
+    "telefono": 2222,
+    "genero": "M",
+    "ciudad": "Florencia",
+    "edad": 26,
+    "id_pais": 2
+  }
+}
+
+###
+
+# Actualizar un proveedor (PATCH)
+PATCH http://localhost:3000/api/proveedor/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "proveedor": {
+    "razon_social": "Distribuciones carrf",
+    "marca": "carrgf"
+  },
+  "persona": {
+    "nombres": "mario",
+    "apellidos": "222",
+    "correo": "marioi.pals@example.com",
+    "telefono": 3333,
+    "genero": "F",
+    "ciudad": "Medellin",
+    "edad": 30,
+    "id_pais": 1
+  }
+}
+
+###
+
+# Eliminar un proveedor
+DELETE http://localhost:3000/api/proveedor/2 HTTP/1.1

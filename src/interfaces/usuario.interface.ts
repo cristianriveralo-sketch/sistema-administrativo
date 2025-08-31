@@ -6,8 +6,8 @@ export interface CreateUsuarioDTO {
     activo?: boolean;
   };
   persona: {
-    nombres: string;
-    apellidos: string;
+    nombre: string;
+    apellido: string;
     correo: string;
     telefono?: number;
     genero?: string;
