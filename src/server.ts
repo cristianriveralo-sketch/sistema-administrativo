@@ -4,6 +4,8 @@ import cors from "cors";
 import sequelize from "./config/database";
 import routes from "./routes/routes";
 import "./models";
+import { createDatabaseIfNotExists } from "./config/createDataBase";
+
 
 dotenv.config();
 
@@ -21,6 +23,9 @@ app.listen(port, async () => {
   console.log(`Server is running on port ${port}`);
 
   try {
+    // Crear la base de datos si no existe
+    await createDatabaseIfNotExists();
+    // Conectar a la base de datos
     await sequelize.authenticate();
     console.log(
       `Connection has been established successfully: ${process.env.DB_DATABASE}`

@@ -14,8 +14,8 @@ POST http://localhost:3000/api/categoria HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "Buso",
-  "descripcion": "Categoría de buso para hombre y mujer"
+  "nombre": "pantalones",
+  "descripcion": "Categoría de pantalones para hombre y mujer"
 }
 
 ###
@@ -91,22 +91,23 @@ Content-Type: application/json
 
 {
   "usuario": {
-    "username": "carlos_dev89",
-    "password": "SecurePass!2025",
-    "avatar": "https://miavatar.com/carlos.png",
+    "username": "ana_dev77",
+    "password": "AnaPass2025!",
+    "avatar": "https://miavatar.com/ana.png",
     "activo": true
   },
   "persona": {
-    "nombre": "Carlos",
-    "apellido": "Ramírez Torres",
-    "correo": "c.ramirez89@example.com",
-    "telefono": 320987654,
-    "genero": "M",
-    "ciudad": "Medellín",
-    "edad": 34,
-    "id_pais": 2
+    "nombre": "Ana",
+    "apellido": "Gómez López",
+    "correo": "ana.gomez@example.com",
+    "telefono": 311654987,
+    "genero": "F",
+    "ciudad": "Bogotá",
+    "edad": 29,
+    "id_pais": 1
   }
 }
+
 
 ###
 
@@ -147,8 +148,8 @@ POST http://localhost:3000/api/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "carlos_dev89",
-  "password": "SecurePass!2025"
+  "username": "ana_dev77",
+  "password": "AnaPass2025!"
 }
 
 
@@ -169,7 +170,7 @@ POST http://localhost:3000/api/color HTTP/1.1
 Content-Type: application/json
 
 {
-  "color": "negro"
+  "color": "blanco"
 }
 
 ###
@@ -205,7 +206,7 @@ POST http://localhost:3000/api/talla HTTP/1.1
 Content-Type: application/json
 
 {
-  "talla": "m"
+  "talla": "l"
 }
 
 ###
@@ -346,3 +347,97 @@ Content-Type: application/json
 
 # Eliminar un proveedor
 DELETE http://localhost:3000/api/cliente/e48a4358-8b92-44a2-a7ce-ca2935b48a82 HTTP/1.1
+
+
+###
+# TODO: PRODUCTO ENDPOINTS
+
+# Obtener todos los productos
+GET http://localhost:3000/api/producto HTTP/1.1
+
+###
+
+# Obtener un producto por ID
+GET http://localhost:3000/api/producto/1 HTTP/1.1
+
+###
+
+# Crear un nuevo producto
+POST http://localhost:3000/api/producto HTTP/1.1
+Content-Type: application/json
+
+{
+  "nombre": "Camiseta deportiva",
+  "descripcion": "Camiseta ligera para entrenamiento",
+  "instrucciones_de_cuidado": "Lavar a mano con agua fría",
+  "cantidad_stock": 50,
+  "id_categoria": 1
+}
+
+###
+
+# Actualizar un producto (PATCH)
+PATCH http://localhost:3000/api/producto/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "nombre": "Mochila escolar",
+  "descripcion": "Mochila resistente con varios compartimentos y correas ajustables",
+  "instrucciones_de_cuidado": "Lavar a mano con agua fría y jabón neutro",
+  "cantidad_stock": 120,
+  "id_categoria": 1
+}
+
+###
+
+# Eliminar un producto
+DELETE http://localhost:3000/api/producto/2 HTTP/1.1
+
+
+###
+# TODO: PRODUCTO COMPLETO ENDPOINTS
+
+# Obtener todos los productos completos
+GET http://localhost:3000/api/productocompleto HTTP/1.1
+
+###
+
+# Obtener un producto completo por ID
+GET http://localhost:3000/api/productocompleto/2 HTTP/1.1
+
+###
+
+# Crear un nuevo producto completo
+POST http://localhost:3000/api/productocompleto HTTP/1.1
+Content-Type: application/json
+
+{
+  "id_producto": 1,
+  "id_talla": 1,
+  "id_color": 1,
+  "precio": 59999.990,
+  "foto": "camiseta_azul.png",
+  "cantidad": 200,
+  "activo": true
+}
+
+###
+
+# Actualizar un producto completo (PATCH)
+PATCH http://localhost:3000/api/productocompleto/4 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id_producto": 3,
+  "id_talla": 1,
+  "id_color": 1,
+  "precio": 5111,
+  "foto": "11111.png",
+  "cantidad": 50,
+  "activo": true
+}
+
+###
+
+# Eliminar un producto completo
+DELETE http://localhost:3000/api/productocompleto/5 HTTP/1.1

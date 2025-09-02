@@ -59,18 +59,18 @@ router.patch("/api/usuario/:id", usuarioController.updateUsuario);
 router.delete("/api/usuario/:id", usuarioController.deleteUsuario);
 
 // --- Producto ---
-router.get("/api/productos", productoController.getAllProductos);
-router.get("/api/productos/:id", productoController.getProductoById);
-router.post("/api/productos", productoController.createProducto);
-router.patch("/api/productos/:id", productoController.updateProducto);
-router.delete("/api/productos/:id", productoController.deleteProducto);
+router.get("/api/producto", productoController.getAllProductos);
+router.get("/api/producto/:id", productoController.getProductoById);
+router.post("/api/producto", productoController.createProducto);
+router.patch("/api/producto/:id", productoController.updateProducto);
+router.delete("/api/producto/:id", productoController.deleteProducto);
 
 // --- Producto Completo ---
-router.get("/api/productocompletos", productoCompletoController.getAllProductoCompletos);
-router.get("/api/productocompletos/:id", productoCompletoController.getProductoCompletoById);
-router.post("/api/productocompletos", productoCompletoController.createProductoCompleto);
-router.patch("/api/productocompletos/:id", productoCompletoController.updateProductoCompleto);
-router.delete("/api/productocompletos/:id", productoCompletoController.deleteProductoCompleto);
+router.get("/api/productocompleto", productoCompletoController.getAllProductoCompletos);
+router.get("/api/productocompleto/:id", productoCompletoController.getProductoCompletoById);
+router.post("/api/productocompleto", productoCompletoController.createProductoCompleto);
+router.patch("/api/productocompleto/:id", productoCompletoController.updateProductoCompleto);
+router.delete("/api/productocompleto/:id", productoCompletoController.deleteProductoCompleto);
 // --- Talla ---
 router.get("/api/talla", tallaController.getAllTallas);
 router.get("/api/talla/:id", tallaController.getTallaById);

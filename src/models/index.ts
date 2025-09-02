@@ -13,120 +13,71 @@ import { Proveedor } from "./proveedor.model";
 import { Compra } from "./compra_inventario.model";
 import { ArticuloCompra } from "./producto_x_compra.model";
 
-// Relaciones
+// ------------------- RELACIONES -------------------
 
 // Pais ↔ Persona
-Pais.hasMany(Persona, { foreignKey: "id_pais" });
-Persona.belongsTo(Pais, { foreignKey: "id_pais" });
+Pais.hasMany(Persona, { foreignKey: "id_pais", as: "personas", onDelete: "SET NULL" });
+Persona.belongsTo(Pais, { foreignKey: "id_pais", as: "pais" });
 
 // Persona ↔ Usuario
-Persona.hasOne(Usuario, {
-  foreignKey: "id_persona",
-  as: "usuario",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-Usuario.belongsTo(Persona, {
-  foreignKey: "id_persona",
-  as: "persona",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
+Persona.hasOne(Usuario, { foreignKey: "id_persona", as: "usuario", onDelete: "CASCADE" });
+Usuario.belongsTo(Persona, { foreignKey: "id_persona", as: "persona" });
 
 // Persona ↔ Cliente
-Persona.hasOne(Cliente, {
-  foreignKey: "id_persona",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
+Persona.hasOne(Cliente, { foreignKey: "id_persona", as: "cliente", onDelete: "CASCADE" });
 Cliente.belongsTo(Persona, { foreignKey: "id_persona", as: "persona" });
 
+// Persona ↔ Proveedor
+Persona.hasOne(Proveedor, { foreignKey: "id_persona", as: "proveedor", onDelete: "CASCADE" });
+Proveedor.belongsTo(Persona, { foreignKey: "id_persona", as: "persona" });
+
 // Categoria ↔ Producto
-Categoria.hasMany(Producto, {
-  foreignKey: "id_categoria",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-Producto.belongsTo(Categoria, { foreignKey: "id_categoria" });
+Categoria.hasMany(Producto, { foreignKey: "id_categoria", as: "productos", onDelete: "CASCADE" });
+Producto.belongsTo(Categoria, { foreignKey: "id_categoria", as: "categoria" });
 
 // Producto ↔ ProductoCompleto
-Producto.hasMany(ProductoCompleto, {
-  foreignKey: "id_producto",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-ProductoCompleto.belongsTo(Producto, { foreignKey: "id_producto" });
+Producto.hasMany(ProductoCompleto, { foreignKey: "id_producto", as: "variantes", onDelete: "CASCADE" });
+ProductoCompleto.belongsTo(Producto, { foreignKey: "id_producto", as: "producto" });
 
 // Color ↔ ProductoCompleto
-Color.hasMany(ProductoCompleto, { foreignKey: "id_color" });
-ProductoCompleto.belongsTo(Color, { foreignKey: "id_color" });
+Color.hasMany(ProductoCompleto, { foreignKey: "id_color", as: "variantes" });
+ProductoCompleto.belongsTo(Color, { foreignKey: "id_color", as: "color" });
 
 // Talla ↔ ProductoCompleto
-Talla.hasMany(ProductoCompleto, { foreignKey: "id_talla" });
-ProductoCompleto.belongsTo(Talla, { foreignKey: "id_talla" });
+Talla.hasMany(ProductoCompleto, { foreignKey: "id_talla", as: "variantes" });
+ProductoCompleto.belongsTo(Talla, { foreignKey: "id_talla", as: "talla" });
 
 // Cliente ↔ Venta
-Cliente.hasMany(Venta, { foreignKey: "id_cliente", onDelete: "CASCADE" });
-Venta.belongsTo(Cliente, { foreignKey: "id_cliente" });
+Cliente.hasMany(Venta, { foreignKey: "id_cliente", as: "ventas", onDelete: "CASCADE" });
+Venta.belongsTo(Cliente, { foreignKey: "id_cliente", as: "cliente" });
 
 // Usuario ↔ Venta
-Usuario.hasMany(Venta, { foreignKey: "id_usuario" });
-Venta.belongsTo(Usuario, { foreignKey: "id_usuario" });
+Usuario.hasMany(Venta, { foreignKey: "id_usuario", as: "ventas" });
+Venta.belongsTo(Usuario, { foreignKey: "id_usuario", as: "usuario" });
 
 // Venta ↔ ArticuloVenta
-Venta.hasMany(ArticuloVenta, { foreignKey: "id_venta", onDelete: "CASCADE" });
-ArticuloVenta.belongsTo(Venta, { foreignKey: "id_venta" });
+Venta.hasMany(ArticuloVenta, { foreignKey: "id_venta", as: "articulosVenta", onDelete: "CASCADE" });
+ArticuloVenta.belongsTo(Venta, { foreignKey: "id_venta", as: "venta" });
 
 // ProductoCompleto ↔ ArticuloVenta
-ProductoCompleto.hasMany(ArticuloVenta, {
-  foreignKey: "id_pxc",
-  onDelete: "CASCADE",
-});
-ArticuloVenta.belongsTo(ProductoCompleto, { foreignKey: "id_pxc" });
+ProductoCompleto.hasMany(ArticuloVenta, { foreignKey: "id_pxc", as: "articulosVenta", onDelete: "CASCADE" });
+ArticuloVenta.belongsTo(ProductoCompleto, { foreignKey: "id_pxc", as: "productoVenta" });
 
 // Proveedor ↔ Compra
-Proveedor.hasMany(Compra, {
-  foreignKey: "id_proveedor",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-Compra.belongsTo(Proveedor, {
-  foreignKey: "id_proveedor",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
+Proveedor.hasMany(Compra, { foreignKey: "id_proveedor", as: "compras", onDelete: "CASCADE" });
+Compra.belongsTo(Proveedor, { foreignKey: "id_proveedor", as: "proveedor" });
 
 // Usuario ↔ Compra
-Usuario.hasMany(Compra, { foreignKey: "id_usuario" });
-Compra.belongsTo(Usuario, { foreignKey: "id_usuario" });
+Usuario.hasMany(Compra, { foreignKey: "id_usuario", as: "compras" });
+Compra.belongsTo(Usuario, { foreignKey: "id_usuario", as: "usuario" });
 
 // Compra ↔ ArticuloCompra
-Compra.hasMany(ArticuloCompra, {
-  foreignKey: "id_compra_inventario",
-  onDelete: "CASCADE",
-});
-ArticuloCompra.belongsTo(Compra, { foreignKey: "id_compra_inventario" });
+Compra.hasMany(ArticuloCompra, { foreignKey: "id_compra_inventario", as: "articulosCompra", onDelete: "CASCADE" });
+ArticuloCompra.belongsTo(Compra, { foreignKey: "id_compra_inventario", as: "compra" });
 
 // ProductoCompleto ↔ ArticuloCompra
-ProductoCompleto.hasMany(ArticuloCompra, {
-  foreignKey: "id_pxc",
-  onDelete: "CASCADE",
-});
-ArticuloCompra.belongsTo(ProductoCompleto, { foreignKey: "id_pxc" });
-
-// Persona ↔ Proveedor
-Persona.hasOne(Proveedor, {
-  foreignKey: "id_persona",
-  as: "proveedor",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-Proveedor.belongsTo(Persona, {
-  foreignKey: "id_persona",
-  as: "persona",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
+ProductoCompleto.hasMany(ArticuloCompra, { foreignKey: "id_pxc", as: "articulosCompra", onDelete: "CASCADE" });
+ArticuloCompra.belongsTo(ProductoCompleto, { foreignKey: "id_pxc", as: "productoCompra" });
 
 export {
   Pais,

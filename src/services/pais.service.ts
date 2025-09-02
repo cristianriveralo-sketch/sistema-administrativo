@@ -41,7 +41,7 @@ export const updatePais = async (id: string, data: any) => {
   }
 };
 
-export const deletePais = async (id: string) => {
+export const deletePais = async (id: number) => {
   try {
     const pais = await Pais.findByPk(id);
     if (!pais) throw new Error("pais no encontrado");

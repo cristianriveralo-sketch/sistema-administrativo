@@ -52,7 +52,7 @@ export const updatePais = async (req: Request, res: Response) => {
 export const deletePais = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const result = await paisService.deletePais(id);
+    const result = await paisService.deletePais(Number(id));
     res.json(result);
   } catch (error: any) {
     console.error(error);
