@@ -2,7 +2,7 @@ import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/database";
 
 export class ArticuloCompra extends Model {
-  public id_pxcompra!: number;
+  public id_axc!: number;
   public id_compra_inventario!: number;
   public id_pxc!: number;
   public cantidad!: number;
@@ -11,9 +11,27 @@ export class ArticuloCompra extends Model {
 
 ArticuloCompra.init(
   {
-    id_pxcompra: { type: DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
-    cantidad: { type: DataTypes.INTEGER },
-    precio_unitario: { type: DataTypes.DECIMAL(10, 2) },
+    id_axc: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    id_compra_inventario: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+    },
+    id_pxc: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+    },
+    cantidad: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    precio_unitario: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+    },
   },
   { sequelize, tableName: "articulo_x_compra", timestamps: false }
 );

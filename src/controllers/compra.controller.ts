@@ -1,24 +1,49 @@
 import { Request, Response } from "express";
+import * as compraService from "../services/compra.service";
 
+// Obtener todas las compras
 export const getAllCompras = async (req: Request, res: Response) => {
-  res.json({ message: "Lista de compras" });
+  try {
+    const compras = await compraService.getAllCompras();
+    res.json(compras);
+  } catch (error) {
+    console.error("Error al obtener compras:", error);
+    res.status(500).json({ message: "Error al obtener compras" });
+  }
 };
 
+// Obtener compra por ID
 export const getCompraById = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  res.json({ message: `Compra ${id}` });
+  try {
+    const { id } = req.params;
+    const compra = await compraService.getCompraById(Number(id));
+    if (!compra) return res.status(404).json({ message: "Compra no encontrada" });
+    res.json(compra);
+  } catch (error) {
+    console.error("Error al obtener compra:", error);
+    res.status(500).json({ message: "Error al obtener compra" });
+  }
 };
 
+// Crear nueva compra
 export const createCompra = async (req: Request, res: Response) => {
-  res.json({ message: "Compra creada", data: req.body });
+  try {
+    const compra = await compraService.createCompra(req.body);
+    res.status(201).json(compra);
+  } catch (error) {
+    console.error("Error al crear compra:", error);
+    res.status(500).json({ message: "Error al crear compra" });
+  }
 };
 
-export const updateCompra = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  res.json({ message: `Compra ${id} actualizada`, data: req.body });
-};
-
+// Eliminar compra
 export const deleteCompra = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  res.json({ message: `Compra ${id} eliminada` });
+  try {
+    const { id } = req.params;
+    const result = await compraService.deleteCompra(Number(id));
+    res.json({ message: "Compra eliminada", result });
+  } catch (error) {
+    console.error("Error al eliminar compra:", error);
+    res.status(500).json({ message: "Error al eliminar compra" });
+  }
 };

@@ -88,11 +88,10 @@ router.patch("/api/proveedor/:id", proveedorController.updateProveedor);
 router.delete("/api/proveedor/:id", proveedorController.deleteProveedor);
 
 // --- Compra ---
-router.get("/api/compras", compraController.getAllCompras);
-router.get("/api/compras/:id", compraController.getCompraById);
-router.post("/api/compras", compraController.createCompra);
-router.patch("/api/compras/:id", compraController.updateCompra);
-router.delete("/api/compras/:id", compraController.deleteCompra);
+router.get("/api/compra", compraController.getAllCompras);
+router.get("/api/compra/:id", compraController.getCompraById);
+router.post("/api/compra", compraController.createCompra);
+router.delete("/api/compra/:id", compraController.deleteCompra);
 
 // --- ProductoXCompra ---
 router.get("/api/productoxcompras", productoXCompraController.getAllProductoXCompras);

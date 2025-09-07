@@ -1,4 +1,4 @@
-import { Persona, Proveedor } from "../models";
+import { Persona, Proveedor, Pais } from "../models";
 import {
   CreateProveedorDTO,
   UpdateProveedorDTO,
@@ -9,7 +9,12 @@ import sequelize from "../config/database";
 export const getAllProveedores = async () => {
   try {
     return await Proveedor.findAll({
-      include: [{ model: Persona, as: "persona" }],
+      include: [
+        { model: Persona, as: "persona" , include: [
+        { model: Pais, as: "pais" }
+      ] },
+        
+      ],
     });
   } catch (error) {
     console.error("Error al obtener proveedores:", error);
@@ -20,7 +25,9 @@ export const getAllProveedores = async () => {
 export const getProveedorById = async (id: number) => {
   try {
     return await Proveedor.findByPk(id, {
-      include: [{ model: Persona, as: "persona" }],
+      include: [{ model: Persona, as: "persona" , include: [
+        { model: Pais, as: "pais" }
+      ]}],
     });
   } catch (error) {
     console.error("Error al obtener proveedor por ID:", error);

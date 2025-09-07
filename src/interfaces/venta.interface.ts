@@ -1,4 +1,3 @@
-// dto/venta.dto.ts
 import { ArticuloVenta, Venta } from "../models";
 import { ArticuloVentaDTO } from "./producto_x_venta.interface";
 

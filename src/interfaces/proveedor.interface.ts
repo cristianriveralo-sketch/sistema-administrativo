@@ -1,3 +1,14 @@
+export interface ProveedorDTO {
+  proveedor: {
+    razon_social: string;
+    marca: string;
+  };
+  persona: {
+    id_persona: number;
+  };
+}
+
+
 export interface CreateProveedorDTO {
   proveedor: { razon_social: string; marca: string };
   persona: {
