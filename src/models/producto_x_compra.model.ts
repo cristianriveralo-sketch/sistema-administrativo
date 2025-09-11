@@ -1,5 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/database";
+import { ProductoCompleto } from "./producto_x_completo.model";
 
 export class ArticuloCompra extends Model {
   public id_axc!: number;
@@ -7,7 +8,10 @@ export class ArticuloCompra extends Model {
   public id_pxc!: number;
   public cantidad!: number;
   public precio_unitario!: number;
+  public productoCompra?: ProductoCompleto;
 }
+
+
 
 ArticuloCompra.init(
   {

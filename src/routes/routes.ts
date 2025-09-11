@@ -68,11 +68,13 @@ router.patch("/api/producto/:id", productoController.updateProducto);
 router.delete("/api/producto/:id", productoController.deleteProducto);
 
 // --- Producto Completo ---
-router.get("/api/productocompleto", productoCompletoController.getAllProductoCompletos);
-router.get("/api/productocompleto/:id", productoCompletoController.getProductoCompletoById);
-router.post("/api/productocompleto",upload.single("foto"), productoCompletoController.createProductoCompleto);
-router.patch("/api/productocompleto/:id", productoCompletoController.updateProductoCompleto);
-router.delete("/api/productocompleto/:id", productoCompletoController.deleteProductoCompleto);
+// --- Producto X Compra ---
+router.get("/api/productoxcompras", productoXCompraController.getAllProductoXCompras);
+router.get("/api/productoxcompras/:id", productoXCompraController.getProductoXCompraById);
+router.post("/api/productoxcompras", productoXCompraController.createProductoXCompra);
+router.patch("/api/productoxcompras/:id", productoXCompraController.updateProductoXCompra);
+router.delete("/api/productoxcompras/:id", productoXCompraController.deleteProductoXCompra);
+
 // --- Talla ---
 router.get("/api/talla", tallaController.getAllTallas);
 router.get("/api/talla/:id", tallaController.getTallaById);
@@ -95,6 +97,7 @@ router.delete("/api/compra/:id", compraController.deleteCompra);
 
 // --- ProductoXCompra ---
 router.get("/api/productoxcompras", productoXCompraController.getAllProductoXCompras);
+router.get("/api/productoxcompras/ids/:id_compra_inventario", productoXCompraController.getIdsAxCByCompra);
 router.get("/api/productoxcompras/:id", productoXCompraController.getProductoXCompraById);
 router.post("/api/productoxcompras", productoXCompraController.createProductoXCompra);
 router.patch("/api/productoxcompras/:id", productoXCompraController.updateProductoXCompra);

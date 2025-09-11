@@ -79,6 +79,8 @@ ArticuloCompra.belongsTo(Compra, { foreignKey: "id_compra_inventario", as: "comp
 ProductoCompleto.hasMany(ArticuloCompra, { foreignKey: "id_pxc", as: "articulosCompra", onDelete: "CASCADE" });
 ArticuloCompra.belongsTo(ProductoCompleto, { foreignKey: "id_pxc", as: "productoCompra" });
 
+
+
 export {
   Pais,
   Persona,

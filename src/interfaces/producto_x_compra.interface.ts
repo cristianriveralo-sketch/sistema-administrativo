@@ -1,3 +1,4 @@
+import { Optional } from "sequelize";
 import { productoCompletoDTO } from "./producto_x_completo.interface";
 
 export interface ArticuloCompraDTO {
@@ -8,3 +9,5 @@ export interface ArticuloCompraDTO {
   precio_unitario: number;
   productoCompra?: productoCompletoDTO;
 }
+
+

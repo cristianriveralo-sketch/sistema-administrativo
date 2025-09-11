@@ -1,4 +1,5 @@
 import { ArticuloVenta, Venta } from "../models";
+import { ClienteConPersona, CreateClienteDTO } from "./cliente.interface";
 import { ArticuloVentaDTO } from "./producto_x_venta.interface";
 
 export interface VentaDTO {
@@ -8,9 +9,12 @@ export interface VentaDTO {
   valor_total: number;
   fecha: Date;
   articulosVenta?: ArticuloVentaDTO[];
+  cliente?: CreateClienteDTO;
 }
 
 
 export interface VentaConArticulos extends Venta {
   articulosVenta?: ArticuloVenta[];
+  cliente?: ClienteConPersona;
+  usuario?: any;   
 }

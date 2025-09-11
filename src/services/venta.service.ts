@@ -4,40 +4,80 @@ import {
   Cliente,
   Usuario,
   ProductoCompleto,
-  Producto
+  Producto,
+  Persona
 } from "../models";
 import { VentaDTO, VentaConArticulos } from "../interfaces/venta.interface";
 import { ArticuloVentaDTO } from "../interfaces/producto_x_venta.interface";
 import sequelize from "../config/database";
+import { ClienteConPersona, CreateClienteDTO } from "../interfaces/cliente.interface";
+
+
+const mapClienteToDTO = (cliente: ClienteConPersona): CreateClienteDTO => ({
+  cliente: {
+    direccion: cliente.direccion,
+    activo: cliente.activo,
+  },
+  persona: {
+    nombre: cliente.persona.nombre,
+    apellido: cliente.persona.apellido,
+    correo: cliente.persona.email,
+    telefono: cliente.persona.telefono,
+    genero: cliente.persona.genero,
+    ciudad: cliente.persona.ciudad,
+    edad: cliente.persona.edad,
+    id_pais: cliente.persona.id_pais,
+  },
+});
+
+
+const mapArticuloVentaToDTO = (articulo: any): ArticuloVentaDTO => ({
+  id_axv: articulo.id_axv,
+  id_pxc: articulo.id_pxc,
+  cantidad_vendida: articulo.cantidad_vendida,
+  precio_unitario: Number(articulo.precio_unitario),
+  id_venta: articulo.id_venta,
+  productoVenta: articulo.productoVenta
+    ? {
+        id_producto: articulo.productoVenta.id_producto,
+        id_talla: articulo.productoVenta.id_talla,
+        id_color: articulo.productoVenta.id_color,
+        precio: Number(articulo.productoVenta.precio),
+        foto: articulo.productoVenta.foto,
+        cantidad: articulo.productoVenta.cantidad,
+        activo: articulo.productoVenta.activo,
+      }
+    : undefined,
+});
 
 // Mapea una venta Sequelize a DTO
-const mapVentaToDTO = (venta: VentaConArticulos): VentaDTO => {
-  const articulos: ArticuloVentaDTO[] = (venta.articulosVenta || []).map(
-    (articulo) => ({
-      id_axv: articulo.id_axv,
-      id_pxc: articulo.id_pxc,
-      cantidad_vendida: articulo.cantidad_vendida,
-      precio_unitario: Number(articulo.precio_unitario),
-    })
-  );
+const mapVentaToDTO = (venta: VentaConArticulos): VentaDTO => ({
+  id_venta: venta.id_venta,
+  id_usuario: venta.id_usuario,
+  valor_total: Number(venta.valor_total),
+  fecha: venta.fecha,
+  articulosVenta: (venta.articulosVenta || []).map(mapArticuloVentaToDTO),
+  id_cliente: venta.id_cliente,
+  cliente: venta.cliente ? mapClienteToDTO(venta.cliente) : undefined,
+});
 
-  return {
-    id_venta: venta.id_venta,
-    id_cliente: venta.id_cliente,
-    id_usuario: venta.id_usuario,
-    valor_total: Number(venta.valor_total),
-    fecha: venta.fecha,
-    articulosVenta: articulos,
-  };
-};
 
 // Listar todas las ventas
 export const getAllVentas = async (): Promise<VentaDTO[]> => {
   try {
     const ventas = (await Venta.findAll({
       include: [
-        { model: ArticuloVenta, as: "articulosVenta" },
-        { model: Cliente, as: "cliente" },
+        {
+          model: ArticuloVenta,
+          as: "articulosVenta",
+          include: [
+            {
+              model: ProductoCompleto,
+              as: "productoVenta",
+            },
+          ],
+        },
+        { model: Cliente, as: "cliente",  include: [{ model: Persona, as: "persona" }] },
         { model: Usuario, as: "usuario" },
       ],
       order: [["fecha", "DESC"]],
@@ -57,7 +97,16 @@ export const getVentaById = async (
   try {
     const venta = (await Venta.findByPk(id_venta, {
       include: [
-        { model: ArticuloVenta, as: "articulosVenta" },
+        {
+          model: ArticuloVenta,
+          as: "articulosVenta",
+          include: [
+            {
+              model: ProductoCompleto,
+              as: "productoVenta",
+            },
+          ],
+        },
         { model: Cliente, as: "cliente" },
         { model: Usuario, as: "usuario" },
       ],
@@ -95,13 +144,18 @@ export const createVenta = async (data: {
 
     // Crear los artículos y actualizar stock
     for (const articulo of data.articulosVenta) {
-      const productoCompleto = await ProductoCompleto.findByPk(articulo.id_pxc, { transaction });
+      const productoCompleto = await ProductoCompleto.findByPk(
+        articulo.id_pxc,
+        { transaction }
+      );
       if (!productoCompleto)
         throw new Error(`ProductoCompleto ${articulo.id_pxc} no encontrado`);
 
       // Validar stock suficiente
       if (productoCompleto.cantidad < articulo.cantidad_vendida) {
-        throw new Error(`Stock insuficiente para el producto ${articulo.id_pxc}`);
+        throw new Error(
+          `Stock insuficiente para el producto ${articulo.id_pxc}`
+        );
       }
 
       const precio_unitario = Number(productoCompleto.precio);
@@ -126,10 +180,14 @@ export const createVenta = async (data: {
       );
 
       // Actualizar stock en Producto
-      const producto = await Producto.findByPk(productoCompleto.id_producto, { transaction });
+      const producto = await Producto.findByPk(productoCompleto.id_producto, {
+        transaction,
+      });
       if (producto) {
         await producto.update(
-          { cantidad_stock: producto.cantidad_stock - articulo.cantidad_vendida },
+          {
+            cantidad_stock: producto.cantidad_stock - articulo.cantidad_vendida,
+          },
           { transaction }
         );
       }
@@ -153,28 +211,36 @@ export const deleteVenta = async (
 ): Promise<{ message: string }> => {
   const transaction = await sequelize.transaction();
   try {
-    const venta = await Venta.findByPk(id_venta, {
+    const venta = (await Venta.findByPk(id_venta, {
       include: [{ model: ArticuloVenta, as: "articulosVenta" }],
       transaction,
-    }) as VentaConArticulos | null;
+    })) as VentaConArticulos | null;
 
     if (!venta) throw new Error("Venta no encontrada");
 
     // Devolver stock
     for (const articulo of venta.articulosVenta || []) {
       // Actualizar stock en ProductoCompleto
-      const productoCompleto = await ProductoCompleto.findByPk(articulo.id_pxc, { transaction });
-      if (!productoCompleto) throw new Error(`ProductoCompleto ${articulo.id_pxc} no encontrado`);
+      const productoCompleto = await ProductoCompleto.findByPk(
+        articulo.id_pxc,
+        { transaction }
+      );
+      if (!productoCompleto)
+        throw new Error(`ProductoCompleto ${articulo.id_pxc} no encontrado`);
       await productoCompleto.update(
         { cantidad: productoCompleto.cantidad + articulo.cantidad_vendida },
         { transaction }
       );
 
       // Actualizar stock en Producto
-      const producto = await Producto.findByPk(productoCompleto.id_producto, { transaction });
+      const producto = await Producto.findByPk(productoCompleto.id_producto, {
+        transaction,
+      });
       if (producto) {
         await producto.update(
-          { cantidad_stock: producto.cantidad_stock + articulo.cantidad_vendida },
+          {
+            cantidad_stock: producto.cantidad_stock + articulo.cantidad_vendida,
+          },
           { transaction }
         );
       }

@@ -493,7 +493,7 @@ GET http://localhost:3000/api/compra HTTP/1.1
 ###
 
 # Obtener una compra por ID
-GET http://localhost:3000/api/compra/2 HTTP/1.1
+GET http://localhost:3000/api/compra/3 HTTP/1.1
 
 ###
 
@@ -520,4 +520,49 @@ Content-Type: application/json
 ###
 
 # Eliminar una compra
-DELETE http://localhost:3000/api/compra/4 HTTP/1.1
+DELETE http://localhost:3000/api/compra/6 HTTP/1.1
+
+
+# TODO: PRODUCTOS POR COMPRA ENDPOINTS
+
+### Obtener todos los artículos de una compra (por id_compra_inventario)
+GET http://localhost:3000/api/productoxcompras?id_compra_inventario=2 HTTP/1.1
+
+###
+
+### Obtener todos los id_axc de una compra
+GET http://localhost:3000/api/productoxcompras/ids/2 HTTP/1.1
+
+###
+
+### Obtener un artículo de compra por ID (id_axc)
+GET http://localhost:3000/api/productoxcompras/2 HTTP/1.1
+
+###
+
+### Crear un artículo de compra
+POST http://localhost:3000/api/productoxcompras HTTP/1.1
+Content-Type: application/json
+
+{
+  "id_compra_inventario": 2,
+  "id_pxc": 7,
+  "cantidad": 15
+}
+
+###
+
+### Actualizar un artículo de compra
+PATCH http://localhost:3000/api/productoxcompras/12 HTTP/1.1
+Content-Type: application/json
+
+{
+  "cantidad": 10,
+  "id_pxc": 6
+}
+
+###
+
+### Eliminar un artículo de compra
+DELETE http://localhost:3000/api/productoxcompras/12 HTTP/1.1
+

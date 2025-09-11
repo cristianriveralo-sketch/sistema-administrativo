@@ -1,3 +1,5 @@
+import { Cliente, Persona } from "../models";
+
 export interface CreateClienteDTO {
     cliente: { direccion: string , activo?: boolean };
     persona: {
@@ -24,4 +26,10 @@ export interface UpdateClienteDTO {
         edad?: number;
         id_pais?: number;
     };
+}
+
+
+
+export interface ClienteConPersona extends Cliente {
+  persona: Persona;
 }
