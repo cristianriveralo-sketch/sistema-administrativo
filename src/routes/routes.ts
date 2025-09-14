@@ -68,12 +68,11 @@ router.patch("/api/producto/:id", productoController.updateProducto);
 router.delete("/api/producto/:id", productoController.deleteProducto);
 
 // --- Producto Completo ---
-// --- Producto X Compra ---
-router.get("/api/productoxcompras", productoXCompraController.getAllProductoXCompras);
-router.get("/api/productoxcompras/:id", productoXCompraController.getProductoXCompraById);
-router.post("/api/productoxcompras", productoXCompraController.createProductoXCompra);
-router.patch("/api/productoxcompras/:id", productoXCompraController.updateProductoXCompra);
-router.delete("/api/productoxcompras/:id", productoXCompraController.deleteProductoXCompra);
+router.get("/api/productocompleto", productoCompletoController.getAllProductoCompletos);
+router.get("/api/productocompleto/:id", productoCompletoController.getProductoCompletoById);
+router.post("/api/productocompleto", productoCompletoController.createProductoCompleto);
+router.patch("/api/productocompleto/:id", productoCompletoController.updateProductoCompleto);
+router.delete("/api/productocompleto/:id", productoCompletoController.deleteProductoCompleto);
 
 // --- Talla ---
 router.get("/api/talla", tallaController.getAllTallas);
