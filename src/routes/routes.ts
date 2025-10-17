@@ -70,7 +70,7 @@ router.delete("/api/producto/:id", productoController.deleteProducto);
 // --- Producto Completo ---
 router.get("/api/productocompleto", productoCompletoController.getAllProductoCompletos);
 router.get("/api/productocompleto/:id", productoCompletoController.getProductoCompletoById);
-router.post("/api/productocompleto", productoCompletoController.createProductoCompleto);
+router.post("/api/productocompleto", upload.single("foto"), productoCompletoController.createProductoCompleto);
 router.patch("/api/productocompleto/:id", productoCompletoController.updateProductoCompleto);
 router.delete("/api/productocompleto/:id", productoCompletoController.deleteProductoCompleto);
 

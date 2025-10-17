@@ -566,3 +566,40 @@ Content-Type: application/json
 ### Eliminar un artículo de compra
 DELETE http://localhost:3000/api/productoxcompras/14 HTTP/1.1
 
+
+
+# TODO: PRODUCTOS POR VENTA ENDPOINTS
+
+### Obtener todos los artículos de una compra (por id_compra_inventario)
+GET http://localhost:3000/api/productoxventas?id_venta=2 HTTP/1.1
+
+###
+
+### Obtener todos los id_axc de una compra
+GET http://localhost:3000/api/productoxventas/2 HTTP/1.1
+
+###
+POST http://localhost:3000/api/productoxventas HTTP/1.1
+Content-Type: application/json
+
+{
+  "id_venta": 2,
+  "id_pxc": 7,
+  "cantidad_vendida": 10
+}
+
+###
+
+### Actualizar un artículo de compra
+PATCH http://localhost:3000/api/productoxventas/16 HTTP/1.1
+Content-Type: application/json
+
+{
+  "cantidad_vendida": 5,
+  "id_pxc": 7
+}
+
+###
+
+### Eliminar un artículo de compra
+DELETE http://localhost:3000/api/productoxventas/16 HTTP/1.1

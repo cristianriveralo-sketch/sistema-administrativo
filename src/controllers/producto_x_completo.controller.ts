@@ -29,6 +29,7 @@ export const createProductoCompleto = async (req: any, res: Response) => {
   try {
     // Validar existencia del producto ANTES de llamar al service
     const producto = await Producto.findByPk(req.body.id_producto);
+    console.log(req.body);
     if (!producto) {
       return res.status(404).json({ message: "Producto no encontrado" });
     }
