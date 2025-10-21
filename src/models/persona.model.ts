@@ -6,6 +6,7 @@ interface PersonaAttributes {
   nombre: string;
   apellido: string;
   genero: string;
+  cedula: string;
   email: string;
   telefono: number;
   ciudad: string;
@@ -21,6 +22,7 @@ export class Persona extends Model<PersonaAttributes, PersonaCreationAttributes>
   public nombre!: string;
   public apellido!: string;
   public genero!: string;
+  public cedula!: string;
   public email!: string;
   public telefono!: number;
   public ciudad!: string;
@@ -34,8 +36,9 @@ Persona.init(
     nombre: { type: DataTypes.STRING(20) },
     apellido: { type: DataTypes.STRING(20) },
     genero: { type: DataTypes.STRING(20) },
-    email: { type: DataTypes.STRING(45) },
-    telefono: { type: DataTypes.INTEGER },
+    cedula: { type: DataTypes.STRING(20), allowNull: false, unique: true },
+    email: { type: DataTypes.STRING(45), allowNull: false, unique: true },
+    telefono: { type: DataTypes.INTEGER, allowNull: false, unique: true },
     ciudad: { type: DataTypes.STRING(25) },
     edad: { type: DataTypes.INTEGER },
     id_pais: {
@@ -44,8 +47,7 @@ Persona.init(
       references: { model: "pais", key: "id_pais" },
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
-    }
+    },
   },
   { sequelize, tableName: "persona", timestamps: false }
 );
-

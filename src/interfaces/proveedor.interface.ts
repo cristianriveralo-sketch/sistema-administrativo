@@ -17,6 +17,7 @@ export interface CreateProveedorDTO {
     correo: string;
     telefono?: number;
     genero?: string;
+    cedula?: string;
     ciudad?: string;
     edad?: number;
     id_pais?: number;
@@ -31,6 +32,7 @@ export interface UpdateProveedorDTO {
     correo?: string;
     telefono?: number;
     genero?: string;
+    cedula?: string;
     ciudad?: string;
     edad?: number;
     id_pais?: number;

@@ -1,10 +1,12 @@
-import { Cliente, Persona } from "../models";
+import { Cliente, Persona, Pais } from "../models";
 import {
   CreateClienteDTO,
   UpdateClienteDTO,
 } from "../interfaces/cliente.interface";
 import { v4 as uuidv4 } from "uuid";
 import sequelize from "../config/database";
+import { Op } from "sequelize";
+
 
 export const getAllClientes = async () => {
   try {
@@ -30,23 +32,46 @@ export const getClienteById = async (id: string) => {
 
 export const createCliente = async (data: CreateClienteDTO) => {
   const transaction = await sequelize.transaction();
+
   try {
+    const dtoPersona = data.persona;
+
+    const pais = await Pais.findByPk(dtoPersona.id_pais);
+    if (!pais) {
+      throw new Error("El país especificado no existe.");
+    }
+
+    const condiciones: any[] = [];
+    if (dtoPersona.correo) condiciones.push({ email: dtoPersona.correo });
+    if (dtoPersona.telefono) condiciones.push({ telefono: dtoPersona.telefono });
+    if (dtoPersona.cedula) condiciones.push({ cedula: dtoPersona.cedula });
+
+    if (condiciones.length > 0) {
+      const existingPersona = await Persona.findOne({
+        where: { [Op.or]: condiciones },
+      });
+
+      if (existingPersona) {
+        throw new Error("Ya existe una persona con el mismo correo, teléfono o cédula.");
+      }
+    }
+
     const mapPersonaDTOToModel = (dto: CreateClienteDTO["persona"]) => ({
       nombre: dto.nombre!,
       apellido: dto.apellido!,
       email: dto.correo!,
       telefono: dto.telefono!,
       genero: dto.genero!,
+      cedula: dto.cedula!,
       ciudad: dto.ciudad!,
       edad: dto.edad!,
       id_pais: dto.id_pais!,
     });
-    // Crear persona
-    const persona = await Persona.create(mapPersonaDTOToModel(data.persona), {
+
+    const persona = await Persona.create(mapPersonaDTOToModel(dtoPersona), {
       transaction,
     });
 
-    // Crear cliente con el id_persona generado
     const cliente = await Cliente.create(
       {
         id_cliente: uuidv4(),
@@ -55,8 +80,10 @@ export const createCliente = async (data: CreateClienteDTO) => {
       },
       { transaction }
     );
+
     await transaction.commit();
     return { cliente, persona };
+
   } catch (error) {
     await transaction.rollback();
     console.error("Error al crear cliente:", error);

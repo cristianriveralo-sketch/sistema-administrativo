@@ -44,6 +44,7 @@ export const createProveedor = async (data: CreateProveedorDTO) => {
       email: dto.correo!,
       telefono: dto.telefono!,
       genero: dto.genero!,
+      cedula: dto.cedula!,
       ciudad: dto.ciudad!,
       edad: dto.edad!,
       id_pais: dto.id_pais!,

@@ -5,7 +5,7 @@ GET http://localhost:3000/api/categoria HTTP/1.1
 ###
 
 # Obtener una categoría por ID
-GET http://localhost:3000/api/categoria/1 HTTP/1.1
+GET http://localhost:3000/api/categoria/2 HTTP/1.1
 
 ###
 
@@ -14,8 +14,8 @@ POST http://localhost:3000/api/categoria HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "pantalones",
-  "descripcion": "Categoría de pantalones para hombre y mujer"
+  "nombre": "zapatos",
+  "descripcion": "Categoría de zapatos para hombre y mujer"
 }
 
 ###
@@ -102,6 +102,7 @@ Content-Type: application/json
     "correo": "ana.gomez@example.com",
     "telefono": 311654987,
     "genero": "F",
+    "cedula": "987654321",
     "ciudad": "Bogotá",
     "edad": 29,
     "id_pais": 1
@@ -309,36 +310,38 @@ Content-Type: application/json
     "activo": true
   },
   "persona": {
-    "nombre": "cristian",
+    "nombre": "cristian sad",
     "apellido": "sss",
-    "correo": "cristian.pals@example.com",
+    "correo": "cristian.pal222s@example.com",
     "telefono": 2222,
     "genero": "M",
+    "cedula": "123456789222",
     "ciudad": "Florencia",
     "edad": 26,
-    "id_pais": 2
+    "id_pais": 1
   }
 }
 
 ###
 
 # Actualizar un cliente (PATCH)
-PATCH http://localhost:3000/api/cliente/e48a4358-8b92-44a2-a7ce-ca2935b48a82 HTTP/1.1
+PATCH http://localhost:3000/api/cliente/0b0eb328-6d73-4791-aee8-001d583f2fe4 HTTP/1.1
 Content-Type: application/json
 
 {
   "cliente": {
-    "direccion": "cr 31 # 2222 a asur 61",
+    "direccion": "cr 3111 # 2222 a asur 61",
     "activo": false
   },
   "persona": {
-    "nombre": "eder",
-    "apellido": "rivv",
-    "correo": "eder.pals@example.com",
+    "nombre": "zzzzz",
+    "apellido": "rrrrrr",
+    "correo": "ezzzzz.pals@example.com",
     "telefono": 11111,
-    "genero": "M",
-    "ciudad": "Neiva",
-    "edad": 33,
+    "genero": "F",
+    "cedula": "222222222",
+    "ciudad": "florencia",
+    "edad": 1,
     "id_pais": 1
   }
 }
@@ -371,7 +374,7 @@ Content-Type: application/json
   "descripcion": "Camiseta ligera para entrenamiento",
   "instrucciones_de_cuidado": "Lavar a mano con agua fría",
   "cantidad_stock": 50,
-  "id_categoria": 1
+  "id_categoria": 2
 }
 
 ###
@@ -412,7 +415,7 @@ POST http://localhost:3000/api/productocompleto HTTP/1.1
 Content-Type: application/json
 
 {
-  "id_producto": 1,
+  "id_producto": 6,
   "id_talla": 1,
   "id_color": 1,
   "precio": 59999.990,

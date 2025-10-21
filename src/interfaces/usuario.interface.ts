@@ -11,6 +11,7 @@ export interface CreateUsuarioDTO {
     correo: string;
     telefono?: number;
     genero?: string;
+    cedula?: string;
     ciudad?: string;
     edad?: number;
     id_pais?: number;
@@ -31,6 +32,7 @@ export interface UpdateUsuarioDTO {
     email?: string;
     telefono?: number;
     genero?: string;
+    cedula?: string;
     ciudad?: string;
     edad?: number;
     id_pais?: number;

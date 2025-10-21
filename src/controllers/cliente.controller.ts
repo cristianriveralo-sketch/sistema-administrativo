@@ -27,11 +27,17 @@ export const createCliente = async (req: Request, res: Response) => {
   try {
     const cliente = await clienteService.createCliente(req.body);
     res.status(201).json(cliente);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al crear cliente y persona" });
+  } catch (error: any) {
+    console.error("Error al crear cliente:", error.message);
+
+    // Si el servicio lanza un error con un mensaje específico, lo enviamos al frontend
+    res.status(400).json({
+      success: false,
+      message: error.message || "Error al crear cliente y persona",
+    });
   }
 };
+
 
 export const updateCliente = async (req: Request, res: Response) => {
   const { id } = req.params;

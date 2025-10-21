@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { Usuario} from "../models/usuario.model";
+import {  Persona } from "../models/persona.model";
 import * as usuarioService from "../services/usuario.service";
 
 // Obtener todos los usuarios
@@ -30,11 +32,12 @@ export const createUsuario = async (req: Request, res: Response) => {
   try {
     const result = await usuarioService.createUsuario(req.body);
     res.status(201).json(result);
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    res.status(500).json({ message: "Error al crear usuario y persona" });
+    res.status(400).json({ message: error.message || "Error al crear usuario y persona" });
   }
 };
+
 
 // Actualizar usuario
 export const updateUsuario = async (req: Request, res: Response) => {

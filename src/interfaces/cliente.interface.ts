@@ -8,6 +8,7 @@ export interface CreateClienteDTO {
         correo: string;
         telefono?: number;
         genero?: string;
+        cedula?: string;
         ciudad?: string;
         edad?: number;
         id_pais?: number;
@@ -22,6 +23,7 @@ export interface UpdateClienteDTO {
         email?: string;
         telefono?: number;
         genero?: string;
+        cedula?: string;
         ciudad?: string;
         edad?: number;
         id_pais?: number;

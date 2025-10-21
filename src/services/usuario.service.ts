@@ -2,10 +2,12 @@ import {
   CreateUsuarioDTO,
   UpdateUsuarioDTO,
 } from "../interfaces/usuario.interface";
-import { Usuario, Persona } from "../models";
+import { Usuario, Persona, Pais } from "../models";
 import { v4 as uuidv4 } from "uuid";
 import sequelize from "../config/database";
 import bcrypt from "bcrypt";
+import { Op } from "sequelize";
+
 
 export const getAllUsuarios = async () => {
   try {
@@ -32,24 +34,42 @@ export const getUsuarioById = async (id: string) => {
 export const createUsuario = async (data: CreateUsuarioDTO) => {
   const transaction = await sequelize.transaction();
   try {
-    const mapPersonaDTOToModel = (dto: CreateUsuarioDTO["persona"]) => ({
-      nombre: dto.nombre!, 
-      apellido: dto.apellido!,
-      email: dto.correo!,
-      telefono: dto.telefono!,
-      genero: dto.genero!,
-      ciudad: dto.ciudad!,
-      edad: dto.edad!,
-      id_pais: dto.id_pais!,
+    const paisExiste = await Pais.findByPk(data.persona.id_pais);
+    if (!paisExiste) {
+      throw new Error("El país seleccionado no existe.");
+    }
+
+    const existePersona = await Persona.findOne({
+      where: {
+        [Op.or]: [
+          { email: data.persona.correo },
+          data.persona.telefono ? { telefono: data.persona.telefono } : undefined,
+          data.persona.cedula ? { cedula: data.persona.cedula } : undefined,
+        ].filter(Boolean) as any,
+      },
     });
 
-    // Crear persona
-    const persona = await Persona.create(mapPersonaDTOToModel(data.persona), {
-      transaction,
-    });
+    if (existePersona) {
+      throw new Error("Ya existe una persona con el mismo correo, teléfono o cédula.");
+    }
 
-    // Crear usuario con el id_persona generado
+    const persona = await Persona.create(
+      {
+        nombre: data.persona.nombre!,
+        apellido: data.persona.apellido!,
+        email: data.persona.correo!,
+        telefono: data.persona.telefono!,
+        genero: data.persona.genero!,
+        cedula: data.persona.cedula!,
+        ciudad: data.persona.ciudad!,
+        edad: data.persona.edad!,
+        id_pais: data.persona.id_pais!,
+      },
+      { transaction }
+    );
+
     const hashedPassword = await bcrypt.hash(data.usuario.password, 10);
+
     const usuario = await Usuario.create(
       {
         id_usuario: uuidv4(),
