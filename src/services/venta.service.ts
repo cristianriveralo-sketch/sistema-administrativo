@@ -5,31 +5,45 @@ import {
   Usuario,
   ProductoCompleto,
   Producto,
-  Persona
+  Persona,
 } from "../models";
 import { VentaDTO, VentaConArticulos } from "../interfaces/venta.interface";
 import { ArticuloVentaDTO } from "../interfaces/producto_x_venta.interface";
 import sequelize from "../config/database";
-import { ClienteConPersona, CreateClienteDTO } from "../interfaces/cliente.interface";
-
+import {
+  ClienteConPersona,
+  CreateClienteDTO,
+} from "../interfaces/cliente.interface";
 
 const mapClienteToDTO = (cliente: ClienteConPersona): CreateClienteDTO => ({
   cliente: {
     direccion: cliente.direccion,
     activo: cliente.activo,
   },
-  persona: {
-    nombre: cliente.persona.nombre,
-    apellido: cliente.persona.apellido,
-    correo: cliente.persona.email,
-    telefono: cliente.persona.telefono,
-    genero: cliente.persona.genero,
-    ciudad: cliente.persona.ciudad,
-    edad: cliente.persona.edad,
-    id_pais: cliente.persona.id_pais,
-  },
+  persona: cliente.persona
+    ? {
+        nombre: cliente.persona.nombre,
+        apellido: cliente.persona.apellido,
+        correo: cliente.persona.email,
+        telefono: cliente.persona.telefono,
+        genero: cliente.persona.genero,
+        cedula: cliente.persona.cedula,
+        ciudad: cliente.persona.ciudad,
+        edad: cliente.persona.edad,
+        id_pais: cliente.persona.id_pais,
+      }
+    : {
+        nombre: "",
+        apellido: "",
+        correo: "",
+        telefono: undefined,
+        genero: undefined,
+        cedula: undefined,
+        ciudad: undefined,
+        edad: undefined,
+        id_pais: undefined,
+      },
 });
-
 
 const mapArticuloVentaToDTO = (articulo: any): ArticuloVentaDTO => ({
   id_axv: articulo.id_axv,
@@ -61,7 +75,6 @@ const mapVentaToDTO = (venta: VentaConArticulos): VentaDTO => ({
   cliente: venta.cliente ? mapClienteToDTO(venta.cliente) : undefined,
 });
 
-
 // Listar todas las ventas
 export const getAllVentas = async (): Promise<VentaDTO[]> => {
   try {
@@ -77,7 +90,11 @@ export const getAllVentas = async (): Promise<VentaDTO[]> => {
             },
           ],
         },
-        { model: Cliente, as: "cliente",  include: [{ model: Persona, as: "persona" }] },
+        {
+          model: Cliente,
+          as: "cliente",
+          include: [{ model: Persona, as: "persona" }],
+        },
         { model: Usuario, as: "usuario" },
       ],
       order: [["fecha", "DESC"]],
@@ -107,7 +124,11 @@ export const getVentaById = async (
             },
           ],
         },
-        { model: Cliente, as: "cliente" },
+        {
+          model: Cliente,
+          as: "cliente",
+          include: [{ model: Persona, as: "persona" }], // ✅ añadido
+        },
         { model: Usuario, as: "usuario" },
       ],
     })) as VentaConArticulos | null;
@@ -119,6 +140,7 @@ export const getVentaById = async (
     throw error;
   }
 };
+
 
 // Crear una venta con sus artículos y actualizar stock
 export const createVenta = async (data: {
@@ -199,7 +221,9 @@ export const createVenta = async (data: {
     await transaction.commit();
     return (await getVentaById(nuevaVenta.id_venta))!;
   } catch (error) {
-    await transaction.rollback();
+    if (!(transaction as any).finished) {
+      await transaction.rollback();
+    }
     console.error("Error al crear venta:", error);
     throw error;
   }

@@ -1,88 +1,116 @@
 import { Request, Response } from "express";
 import * as articuloService from "../services/producto_x_compra.service";
+import { ResponseModel } from "../models/response.model";
 
-// Listar todos los artículos de una compra (por id_compra_inventario)
+// todo: Obtener todos los artículos de una compra (por id_compra_inventario)
 export const getAllProductoXCompras = async (req: Request, res: Response) => {
   try {
     const { id_compra_inventario } = req.query;
     if (!id_compra_inventario) {
-      return res.status(400).json({ message: "Falta id_compra_inventario" });
+      return res
+        .status(400)
+        .json(new ResponseModel("Falta id_compra_inventario", true, 400, null));
     }
 
     const articulos = await articuloService.getArticulosByCompra(Number(id_compra_inventario));
-    res.json(articulos);
-  } catch (error) {
-    console.error("Error al obtener artículos:", error);
-    res.status(500).json({ message: "Error al obtener artículos" });
+    res
+      .status(200)
+      .json(new ResponseModel("Artículos obtenidos correctamente", false, 200, articulos));
+  } catch (error: any) {
+    console.error(error);
+    res
+      .status(500)
+      .json(new ResponseModel(error.message || "Error al obtener artículos", true, 500, null));
   }
 };
 
-// Obtener todos los id_axc por id_compra_inventario
+// todo: Obtener todos los id_axc por id_compra_inventario
 export const getIdsAxCByCompra = async (req: Request, res: Response) => {
   try {
     const { id_compra_inventario } = req.params;
     const ids = await articuloService.getIdsAxCByCompra(Number(id_compra_inventario));
-    res.json(ids);
-  } catch (error) {
-    console.error("Error al obtener IDs:", error);
-    res.status(500).json({ message: "Error al obtener IDs" });
+    res
+      .status(200)
+      .json(new ResponseModel("IDs obtenidos correctamente", false, 200, ids));
+  } catch (error: any) {
+    console.error(error);
+    res
+      .status(500)
+      .json(new ResponseModel(error.message || "Error al obtener IDs", true, 500, null));
   }
 };
 
-// Obtener un artículo por ID
+// todo: Obtener un artículo por ID
 export const getProductoXCompraById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const articulo = await articuloService.getArticuloCompraById(Number(id));
 
-    if (!articulo) {
-      return res.status(404).json({ message: "Artículo no encontrado" });
-    }
+    if (!articulo)
+      return res
+        .status(404)
+        .json(new ResponseModel("Artículo no encontrado", true, 404, null));
 
-    res.json(articulo);
-  } catch (error) {
-    console.error("Error al obtener artículo:", error);
-    res.status(500).json({ message: "Error al obtener artículo" });
+    res
+      .status(200)
+      .json(new ResponseModel("Artículo obtenido correctamente", false, 200, articulo));
+  } catch (error: any) {
+    console.error(error);
+    res
+      .status(500)
+      .json(new ResponseModel(error.message || "Error al obtener artículo", true, 500, null));
   }
 };
 
-// Crear un nuevo artículo en la compra
+// todo: Crear un nuevo artículo en la compra
 export const createProductoXCompra = async (req: Request, res: Response) => {
   try {
     const nuevoArticulo = await articuloService.createArticuloCompra(req.body);
-    res.status(201).json({ message: "Artículo creado correctamente", data: nuevoArticulo });
-  } catch (error) {
-    console.error("Error al crear artículo:", error);
-    res.status(500).json({ message: "Error al crear artículo" });
+    res
+      .status(201)
+      .json(new ResponseModel("Artículo creado correctamente", false, 201, nuevoArticulo));
+  } catch (error: any) {
+    console.error(error);
+    res
+      .status(400)
+      .json(new ResponseModel(error.message || "Error al crear artículo", true, 400, null));
   }
 };
 
-// Actualizar un artículo de la compra
+// todo: Actualizar un artículo de la compra
 export const updateProductoXCompra = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const articuloActualizado = await articuloService.updateArticuloCompra(Number(id), req.body);
 
-    if (!articuloActualizado) {
-      return res.status(404).json({ message: "Artículo no encontrado para actualizar" });
-    }
+    if (!articuloActualizado)
+      return res
+        .status(404)
+        .json(new ResponseModel("Artículo no encontrado para actualizar", true, 404, null));
 
-    res.json({ message: "Artículo actualizado correctamente", data: articuloActualizado });
-  } catch (error) {
-    console.error("Error al actualizar artículo:", error);
-    res.status(500).json({ message: "Error al actualizar artículo" });
+    res
+      .status(200)
+      .json(new ResponseModel("Artículo actualizado correctamente", false, 200, articuloActualizado));
+  } catch (error: any) {
+    console.error(error);
+    res
+      .status(400)
+      .json(new ResponseModel(error.message || "Error al actualizar artículo", true, 400, null));
   }
 };
 
-// Eliminar un artículo de la compra
+// todo: Eliminar un artículo de la compra
 export const deleteProductoXCompra = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const result = await articuloService.deleteArticuloCompra(Number(id));
-
-    res.json(result);
-  } catch (error) {
-    console.error("Error al eliminar artículo:", error);
-    res.status(500).json({ message: "Error al eliminar artículo" });
+    res
+      .status(200)
+      .json(new ResponseModel("Artículo eliminado correctamente", false, 200, result));
+  } catch (error: any) {
+    console.error(error);
+    res
+      .status(400)
+      .json(new ResponseModel(error.message || "Error al eliminar artículo", true, 400, null));
   }
 };
