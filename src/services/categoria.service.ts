@@ -1,7 +1,7 @@
 import { CreateCategoriaDTO } from "../interfaces/categoria.interface";
 import { Categoria } from "../models";
 
-// Obtener todas las categorías
+// todo: Obtener todas las categorías
 export const getAllCategorias = async () => {
   try {
     const categorias = await Categoria.findAll();
@@ -12,7 +12,7 @@ export const getAllCategorias = async () => {
   }
 };
 
-// Obtener categoría por ID
+// todo: Obtener categoría por ID
 export const getCategoriaById = async (id: string) => {
   try {
     const categoria = await Categoria.findByPk(id);
@@ -23,7 +23,7 @@ export const getCategoriaById = async (id: string) => {
   }
 };
 
-// Crear nueva categoría
+// todo: Crear nueva categoría
 export const createCategoria = async (data: CreateCategoriaDTO) => {
   try {
     // Validar que no exista otra categoría con el mismo nombre
@@ -38,7 +38,7 @@ export const createCategoria = async (data: CreateCategoriaDTO) => {
   }
 };
 
-// Actualizar categoría
+// todo: Actualizar categoría
 export const updateCategoria = async (id: string, data: any) => {
   try {
     const categoria = await Categoria.findByPk(id);
@@ -58,7 +58,7 @@ export const updateCategoria = async (id: string, data: any) => {
   }
 };
 
-// Eliminar categoría
+// todo: Eliminar categoría
 export const deleteCategoria = async (id: string) => {
   try {
     const categoria = await Categoria.findByPk(id);

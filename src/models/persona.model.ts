@@ -11,13 +11,16 @@ interface PersonaAttributes {
   telefono: number;
   ciudad: string;
   edad: number;
-  id_pais: number;   
+  id_pais: number;
 }
 
-interface PersonaCreationAttributes extends Optional<PersonaAttributes, "id_persona"> {}
+interface PersonaCreationAttributes
+  extends Optional<PersonaAttributes, "id_persona"> {}
 
-export class Persona extends Model<PersonaAttributes, PersonaCreationAttributes>
-  implements PersonaAttributes {
+export class Persona
+  extends Model<PersonaAttributes, PersonaCreationAttributes>
+  implements PersonaAttributes
+{
   public id_persona!: number;
   public nombre!: string;
   public apellido!: string;
@@ -32,13 +35,17 @@ export class Persona extends Model<PersonaAttributes, PersonaCreationAttributes>
 
 Persona.init(
   {
-    id_persona: { type: DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
+    id_persona: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     nombre: { type: DataTypes.STRING(20) },
     apellido: { type: DataTypes.STRING(20) },
     genero: { type: DataTypes.STRING(20) },
-    cedula: { type: DataTypes.STRING(20), allowNull: false, unique: true },
-    email: { type: DataTypes.STRING(45), allowNull: false, unique: true },
-    telefono: { type: DataTypes.INTEGER, allowNull: false, unique: true },
+    cedula: { type: DataTypes.STRING(20), allowNull: false },
+    email: { type: DataTypes.STRING(45), allowNull: false },
+    telefono: { type: DataTypes.BIGINT, allowNull: false},
     ciudad: { type: DataTypes.STRING(25) },
     edad: { type: DataTypes.INTEGER },
     id_pais: {

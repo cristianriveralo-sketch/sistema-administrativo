@@ -1,62 +1,86 @@
 import { Request, Response } from "express";
 import * as productoService from "../services/producto.service";
+import { ResponseModel } from "../models/response.model";
 
-// todo: Obtener todos los productos
+// Obtener todos los productos
 export const getAllProductos = async (req: Request, res: Response) => {
   try {
     const productos = await productoService.getAllProductos();
-    res.json(productos);
-  } catch (error) {
+    res.status(200).json(
+      new ResponseModel("Productos obtenidos correctamente", false, 200, productos)
+    );
+  } catch (error: any) {
     console.error(error);
-    res.status(500).json({ message: "Error al obtener productos" });
+    res.status(500).json(
+      new ResponseModel(error.message || "Error al obtener productos", true, 500, null)
+    );
   }
 };
 
-// todo: Obtener producto por ID
+// Obtener producto por ID
 export const getProductoById = async (req: Request, res: Response) => {
+  const { id } = req.params;
   try {
-    const { id } = req.params;
     const producto = await productoService.getProductoById(Number(id));
-    if (!producto)
-      return res.status(404).json({ message: "Producto no encontrado" });
-    res.json(producto);
-  } catch (error) {
+    if (!producto) {
+      return res
+        .status(404)
+        .json(new ResponseModel("Producto no encontrado", true, 404, null));
+    }
+    res.status(200).json(
+      new ResponseModel("Producto obtenido correctamente", false, 200, producto)
+    );
+  } catch (error: any) {
     console.error(error);
-    res.status(500).json({ message: "Error al obtener producto" });
+    res.status(500).json(
+      new ResponseModel(error.message || "Error al obtener producto", true, 500, null)
+    );
   }
 };
 
-// todo: Crear nuevo producto
+// Crear nuevo producto
 export const createProducto = async (req: Request, res: Response) => {
   try {
     const producto = await productoService.createProducto(req.body);
-    res.status(201).json(producto);
-  } catch (error) {
+    res.status(201).json(
+      new ResponseModel("Producto creado correctamente", false, 201, producto)
+    );
+  } catch (error: any) {
     console.error(error);
-    res.status(500).json({ message: "Error al crear producto" });
+    res.status(400).json(
+      new ResponseModel(error.message || "Error al crear producto", true, 400, null)
+    );
   }
 };
 
-// todo: Actualizar producto
+// Actualizar producto
 export const updateProducto = async (req: Request, res: Response) => {
-  try {
   const { id } = req.params;
-  const producto = await productoService.updateProducto(Number(id), req.body);
-  res.json(producto);
-  } catch (error) {
+  try {
+    const producto = await productoService.updateProducto(Number(id), req.body);
+    res.status(200).json(
+      new ResponseModel("Producto actualizado correctamente", false, 200, producto)
+    );
+  } catch (error: any) {
     console.error(error);
-    res.status(500).json({ message: "Error al actualizar producto" });
+    res.status(400).json(
+      new ResponseModel(error.message || "Error al actualizar producto", true, 400, null)
+    );
   }
 };
 
-// todo: Eliminar producto
+// Eliminar producto
 export const deleteProducto = async (req: Request, res: Response) => {
+  const { id } = req.params;
   try {
-    const { id } = req.params;
     const result = await productoService.deleteProducto(Number(id));
-    res.json(result);
-  } catch (error) {
+    res.status(200).json(
+      new ResponseModel("Producto eliminado correctamente", false, 200, result)
+    );
+  } catch (error: any) {
     console.error(error);
-    res.status(500).json({ message: "Error al eliminar producto" });
+    res.status(400).json(
+      new ResponseModel(error.message || "Error al eliminar producto", true, 400, null)
+    );
   }
 };

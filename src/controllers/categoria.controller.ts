@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import * as categoriaService from "../services/categoria.service";
 import { ResponseModel } from "../models/response.model";
 
-// Obtener todas las categorías
+// todo: Obtener todas las categorías
 export const getAllCategorias = async (req: Request, res: Response) => {
   try {
     const categorias = await categoriaService.getAllCategorias();
@@ -17,7 +17,7 @@ export const getAllCategorias = async (req: Request, res: Response) => {
   }
 };
 
-// Obtener categoría por ID
+// todo: Obtener categoría por ID
 export const getCategoriaById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -38,7 +38,7 @@ export const getCategoriaById = async (req: Request, res: Response) => {
   }
 };
 
-// Crear nueva categoría
+// todo: Crear nueva categoría
 export const createCategoria = async (req: Request, res: Response) => {
   try {
     const categoria = await categoriaService.createCategoria(req.body);
@@ -53,7 +53,7 @@ export const createCategoria = async (req: Request, res: Response) => {
   }
 };
 
-// Actualizar categoría
+//todo: Actualizar categoría
 export const updateCategoria = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -69,7 +69,7 @@ export const updateCategoria = async (req: Request, res: Response) => {
   }
 };
 
-// Eliminar categoría
+//todo: Eliminar categoría
 export const deleteCategoria = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -82,5 +82,7 @@ export const deleteCategoria = async (req: Request, res: Response) => {
     res.status(400).json(
       new ResponseModel(error.message, true, 400, null)
     );
+
+    
   }
 };

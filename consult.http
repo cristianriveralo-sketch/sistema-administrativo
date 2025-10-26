@@ -14,14 +14,14 @@ POST http://localhost:3000/api/categoria HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "zapatos",
-  "descripcion": "Categoría de zapatos para hombre y mujer"
+  "nombre": "teniss",
+  "descripcion": "Categoría de tenis para hombre y mujer"
 }
 
 ###
 
 # Actualizar una categoría (PATCH)
-PATCH http://localhost:3000/api/categoria/2 HTTP/1.1
+PATCH http://localhost:3000/api/categoria/1 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -32,7 +32,7 @@ Content-Type: application/json
 ###
 
 # Eliminar una categoría
-DELETE http://localhost:3000/api/categoria/2 HTTP/1.1
+DELETE http://localhost:3000/api/categoria/1 HTTP/1.1
 
 ###
 
@@ -43,7 +43,7 @@ GET http://localhost:3000/api/pais HTTP/1.1
 ###
 
 # Obtener un país por ID
-GET http://localhost:3000/api/pais/1 HTTP/1.1
+GET http://localhost:3000/api/pais/2 HTTP/1.1
 
 ###
 
@@ -51,9 +51,9 @@ GET http://localhost:3000/api/pais/1 HTTP/1.1
 POST http://localhost:3000/api/pais HTTP/1.1
 Content-Type: application/json
 
-{
-  "nombre": "Mexico",
-  "codigo": "MX"
+{ 
+  "nombre": "Estados Unidos",
+  "codigo": "US"
 }
 
 ###
@@ -63,8 +63,8 @@ PATCH http://localhost:3000/api/pais/1 HTTP/1.1
 Content-Type: application/json
 
 { 
-  "nombre": "Estados Unidos",
-  "codigo": "US"
+  "nombre": "Alemania",
+  "codigo": "DE"
 }
 
 ###
@@ -81,7 +81,7 @@ GET http://localhost:3000/api/usuario HTTP/1.1
 ###
 
 # Obtener un usuario por ID
-GET http://localhost:3000/api/usuario/ebd4089c-b4e3-466f-9393-eaf844654057 HTTP/1.1
+GET http://localhost:3000/api/usuario/fcf672f6-85c9-41fe-8a04-f8326ab58aac HTTP/1.1
 
 ###
 
@@ -97,14 +97,14 @@ Content-Type: application/json
     "activo": true
   },
   "persona": {
-    "nombre": "Ana",
-    "apellido": "Gómez López",
-    "correo": "ana.gomez@example.com",
-    "telefono": 311654987,
-    "genero": "F",
-    "cedula": "987654321",
-    "ciudad": "Bogotá",
-    "edad": 29,
+    "nombres": "Carlos",
+    "apellidos": "Ramírez Torres",
+    "correo": "c.ramirez89@example.com",
+    "telefono": 3212232332,
+    "genero": "M",
+    "cedula": "1122334455",
+    "ciudad": "Medellín",
+    "edad": 34,
     "id_pais": 1
   }
 }
@@ -113,7 +113,7 @@ Content-Type: application/json
 ###
 
 # Actualizar un usuario (PATCH)
-PATCH http://localhost:3000/api/usuario/550983de-642c-4c3b-82ec-96c0a7b3c9c9 HTTP/1.1
+PATCH http://localhost:3000/api/usuario/fcf672f6-85c9-41fe-8a04-f8326ab58aac HTTP/1.1
 Content-Type: application/json
 
 {
@@ -126,12 +126,13 @@ Content-Type: application/json
   "persona": {
     "nombres": "Carlos",
     "apellidos": "Ramírez Torres",
-    "correo": "c.ramirez89@example.com",
-    "telefono": 320987654,
+    "email": "c.ramirezs89@example.com",
+    "telefono": 3209876512,
     "genero": "M",
+    "cedula": "323441231",
     "ciudad": "Medellín",
     "edad": 34,
-    "id_pais": 3
+    "id_pais": 1
   }
 }
 
@@ -139,7 +140,7 @@ Content-Type: application/json
 
 ###
 # Eliminar un usuario
-DELETE http://localhost:3000/api/usuario/97d151db-a213-497e-a3cf-6398c9836cc0 HTTP/1.1
+DELETE http://localhost:3000/api/usuario/fcf672f6-85c9-41fe-8a04-f8326ab58aac HTTP/1.1
 
 ###
 
@@ -162,7 +163,7 @@ GET http://localhost:3000/api/color HTTP/1.1
 ###
 
 # Obtener una color por ID
-GET http://localhost:3000/api/color/1 HTTP/1.1
+GET http://localhost:3000/api/color/2 HTTP/1.1
 
 ###
 
@@ -171,7 +172,7 @@ POST http://localhost:3000/api/color HTTP/1.1
 Content-Type: application/json
 
 {
-  "color": "blanco"
+  "color": "rojo"
 }
 
 ###
@@ -187,7 +188,7 @@ Content-Type: application/json
 ###
 
 # Eliminar una color
-DELETE http://localhost:3000/api/color/2 HTTP/1.1
+DELETE http://localhost:3000/api/color/3 HTTP/1.1
 
 ###
 
@@ -207,17 +208,17 @@ POST http://localhost:3000/api/talla HTTP/1.1
 Content-Type: application/json
 
 {
-  "talla": "l"
+  "talla": "M"
 }
 
 ###
 
 # Actualizar una talla (PATCH)
-PATCH http://localhost:3000/api/talla/1 HTTP/1.1
+PATCH http://localhost:3000/api/talla/2 HTTP/1.1
 Content-Type: application/json
 
 {
-  "talla": "l"
+  "talla": "xl"
 }
 
 ###
@@ -244,25 +245,26 @@ Content-Type: application/json
 
 {
   "proveedor": {
-    "razon_social": "Distribuciones ll",
-    "marca": "ll"
+    "razon_social": "Distribuciones lll",
+    "marca": "lll"
   },
   "persona": {
-    "nombres": "cristian",
-    "apellidos": "sss",
-    "correo": "cristian.pals@example.com",
-    "telefono": 2222,
+    "nombres": "fernando",
+    "apellidos": "maritin",
+    "correo": "distribucioneslsslff@example.com",
+    "telefono": 1111133333,
     "genero": "M",
+    "cedula": "9876532555",
     "ciudad": "Florencia",
     "edad": 26,
-    "id_pais": 2
+    "id_pais": 1
   }
 }
 
 ###
 
 # Actualizar un proveedor (PATCH)
-PATCH http://localhost:3000/api/proveedor/1 HTTP/1.1
+PATCH http://localhost:3000/api/proveedor/5 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -274,8 +276,9 @@ Content-Type: application/json
     "nombres": "mario",
     "apellidos": "222",
     "correo": "marioi.pals@example.com",
-    "telefono": 3333,
+    "telefono": 2147483647,
     "genero": "F",
+    "cedula": 23435424356,
     "ciudad": "Medellin",
     "edad": 30,
     "id_pais": 1
@@ -285,7 +288,7 @@ Content-Type: application/json
 ###
 
 # Eliminar un proveedor
-DELETE http://localhost:3000/api/proveedor/2 HTTP/1.1
+DELETE http://localhost:3000/api/proveedor/5 HTTP/1.1
 
 ###
 # TODO: CLIENTE ENDPOINTS
@@ -296,7 +299,7 @@ GET http://localhost:3000/api/cliente HTTP/1.1
 ###
 
 # Obtener un cliente por ID
-GET http://localhost:3000/api/cliente/75b9d4ac-3306-4f35-804d-407b5aef7f35 HTTP/1.1
+GET http://localhost:3000/api/cliente/0b0eb328-6d73-4791-aee8-001d583f2fe4 HTTP/1.1
 
 ###
 
@@ -312,10 +315,10 @@ Content-Type: application/json
   "persona": {
     "nombre": "cristian sad",
     "apellido": "sss",
-    "correo": "cristian.pal222s@example.com",
-    "telefono": 2222,
+    "correo": "cristian.pal222s222s@example.com",
+    "telefono": 322133213543,
     "genero": "M",
-    "cedula": "123456789222",
+    "cedula": "32111233222",
     "ciudad": "Florencia",
     "edad": 26,
     "id_pais": 1
@@ -349,7 +352,7 @@ Content-Type: application/json
 ###
 
 # Eliminar un proveedor
-DELETE http://localhost:3000/api/cliente/e48a4358-8b92-44a2-a7ce-ca2935b48a82 HTTP/1.1
+DELETE http://localhost:3000/api/cliente/0b0eb328-6d73-4791-aee8-001d583f2fe4  HTTP/1.1
 
 
 ###
