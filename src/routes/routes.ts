@@ -56,8 +56,9 @@ router.delete("/api/color/:id", colorController.deleteColor);
 // --- Usuario ---
 router.get("/api/usuario", usuarioController.getAllUsuarios);
 router.get("/api/usuario/:id", usuarioController.getUsuarioById);
-router.post("/api/usuario", usuarioController.createUsuario);
-router.patch("/api/usuario/:id", usuarioController.updateUsuario);
+router.post("/api/usuario", upload.single("avatar"), usuarioController.createUsuario);
+router.patch("/api/usuario/:id", upload.single("avatar"), usuarioController.updateUsuario);
+
 router.delete("/api/usuario/:id", usuarioController.deleteUsuario);
 
 // --- Producto ---
@@ -71,7 +72,7 @@ router.delete("/api/producto/:id", productoController.deleteProducto);
 router.get("/api/productocompleto", productoCompletoController.getAllProductoCompletos);
 router.get("/api/productocompleto/:id", productoCompletoController.getProductoCompletoById);
 router.post("/api/productocompleto", upload.single("foto"), productoCompletoController.createProductoCompleto);
-router.patch("/api/productocompleto/:id", productoCompletoController.updateProductoCompleto);
+router.patch("/api/productocompleto/:id",upload.single("foto"),productoCompletoController.updateProductoCompleto);
 router.delete("/api/productocompleto/:id", productoCompletoController.deleteProductoCompleto);
 
 // --- Talla ---

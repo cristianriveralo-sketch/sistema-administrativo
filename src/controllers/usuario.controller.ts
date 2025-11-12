@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import * as usuarioService from "../services/usuario.service";
 import { ResponseModel } from "../models/response.model";
+import { uploadToS3 } from "../utils/s3";
+import { CreateUsuarioDTO, UpdateUsuarioDTO } from "../interfaces/usuario.interface";
 
 // todo: Obtener todos los usuarios
 export const getAllUsuarios = async (req: Request, res: Response) => {
@@ -38,10 +40,40 @@ export const getUsuarioById = async (req: Request, res: Response) => {
   }
 };
 
-// todo: Crear usuario
-export const createUsuario = async (req: Request, res: Response) => {
+// Crear usuario
+export const createUsuario = async (req: any, res: Response) => {
   try {
-    const result = await usuarioService.createUsuario(req.body);
+    let avatarUrl: string | undefined;
+    if (req.file) {
+      const result = await uploadToS3(
+        req.file.buffer,
+        req.file.originalname,
+        req.file.mimetype
+      );
+      avatarUrl = result.Location;
+    }
+
+    const data: CreateUsuarioDTO = {
+      usuario: {
+        username: req.body.usuario.username,
+        password: req.body.usuario.password,
+        ...(avatarUrl && { avatar: avatarUrl }),
+        activo: req.body.usuario.activo === "true" || req.body.usuario.activo === true,
+      },
+      persona: {
+        nombre: req.body.persona.nombre,
+        apellido: req.body.persona.apellido,
+        correo: req.body.persona.correo,
+        telefono: req.body.persona.telefono ? Number(req.body.persona.telefono) : undefined,
+        genero: req.body.persona.genero,
+        cedula: req.body.persona.cedula,
+        ciudad: req.body.persona.ciudad,
+        edad: req.body.persona.edad ? Number(req.body.persona.edad) : undefined,
+        id_pais: req.body.persona.id_pais ? Number(req.body.persona.id_pais) : undefined,
+      },
+    };
+
+    const result = await usuarioService.createUsuario(data);
     res.status(201).json(
       new ResponseModel("Usuario creado correctamente", false, 201, result)
     );
@@ -53,13 +85,43 @@ export const createUsuario = async (req: Request, res: Response) => {
   }
 };
 
-// todo: Actualizar usuario
-export const updateUsuario = async (req: Request, res: Response) => {
+// Actualizar usuario
+export const updateUsuario = async (req: any, res: Response) => {
   const { id } = req.params;
   try {
-    const usuario = await usuarioService.updateUsuario(id, req.body);
+    let avatarUrl: string | undefined;
+    if (req.file) {
+      const result = await uploadToS3(
+        req.file.buffer,
+        req.file.originalname,
+        req.file.mimetype
+      );
+      avatarUrl = result.Location;
+    }
+
+    const data: Partial<UpdateUsuarioDTO> = {
+      usuario: {
+        ...(req.body.usuario && { username: req.body.usuario.username }),
+        ...(req.body.usuario && req.body.usuario.password && { password: req.body.usuario.password }),
+        ...(avatarUrl && { avatar: avatarUrl }),
+        ...(req.body.usuario && req.body.usuario.activo !== undefined && { activo: req.body.usuario.activo === "true" || req.body.usuario.activo === true }),
+      },
+      persona: {
+        ...(req.body.persona && { nombre: req.body.persona.nombre }),
+        ...(req.body.persona && { apellido: req.body.persona.apellido }),
+        ...(req.body.persona && req.body.persona.email && { email: req.body.persona.email }),
+        ...(req.body.persona && req.body.persona.telefono !== undefined && { telefono: Number(req.body.persona.telefono) }),
+        ...(req.body.persona && { genero: req.body.persona.genero }),
+        ...(req.body.persona && { cedula: req.body.persona.cedula }),
+        ...(req.body.persona && { ciudad: req.body.persona.ciudad }),
+        ...(req.body.persona && req.body.persona.edad !== undefined && { edad: Number(req.body.persona.edad) }),
+        ...(req.body.persona && req.body.persona.id_pais !== undefined && { id_pais: Number(req.body.persona.id_pais) }),
+      }
+    };
+
+    const result = await usuarioService.updateUsuario(id, data);
     res.status(200).json(
-      new ResponseModel("Usuario actualizado correctamente", false, 200, usuario)
+      new ResponseModel("Usuario actualizado correctamente", false, 200, result)
     );
   } catch (error: any) {
     console.error(error);
@@ -68,6 +130,7 @@ export const updateUsuario = async (req: Request, res: Response) => {
     );
   }
 };
+
 
 // todo: Eliminar usuario
 export const deleteUsuario = async (req: Request, res: Response) => {

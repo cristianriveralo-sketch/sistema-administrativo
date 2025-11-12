@@ -75,14 +75,6 @@ export const updateProductoCompleto = async (
     const productoCompleto = await ProductoCompleto.findByPk(id, { transaction });
     if (!productoCompleto) throw new Error("Producto completo no encontrado");
 
-    // Verificar que no cambie el id_producto
-    if (
-      data.id_producto &&
-      data.id_producto !== productoCompleto.id_producto
-    ) {
-      throw new Error("No se permite cambiar el id_producto en un producto completo existente");
-    }
-
     // Buscar producto asociado
     const producto = await Producto.findByPk(productoCompleto.id_producto, { transaction });
     if (!producto) throw new Error("Producto no encontrado");

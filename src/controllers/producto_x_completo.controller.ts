@@ -83,7 +83,7 @@ export const createProductoCompleto = async (req: any, res: Response) => {
 };
 
 // todo: Actualizar producto completo
-export const updateProductoCompleto = async (req: Request, res: Response) => {
+/* export const updateProductoCompleto = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const productoCompleto = await productoCompletoService.updateProductoCompleto(Number(id), req.body);
@@ -96,7 +96,70 @@ export const updateProductoCompleto = async (req: Request, res: Response) => {
       .status(400)
       .json(new ResponseModel(error.message || "Error al actualizar producto completo", true, 400, null));
   }
+}; */
+// todo: Actualizar producto completo
+export const updateProductoCompleto = async (req: any, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    // Si se envió una nueva imagen, subir a S3
+    let fotoUrl: string | null = null;
+    if (req.file) {
+      const result = await uploadToS3(
+        req.file.buffer,
+        req.file.originalname,
+        req.file.mimetype
+      );
+      fotoUrl = result.Location;
+    }
+
+    // Construir los datos a actualizar
+    const dataToUpdate: any = {
+      ...req.body,
+      // convertir tipos si lo necesitas
+      id_talla: req.body.id_talla ? Number(req.body.id_talla) : undefined,
+      id_color: req.body.id_color ? Number(req.body.id_color) : undefined,
+      precio: req.body.precio ? Number(req.body.precio) : undefined,
+      cantidad: req.body.cantidad ? Number(req.body.cantidad) : undefined,
+      activo:
+        req.body.activo === "true" || req.body.activo === true
+          ? true
+          : req.body.activo === "false" || req.body.activo === false
+          ? false
+          : undefined,
+      ...(fotoUrl && { foto: fotoUrl }),
+    };
+
+    const productoCompleto = await productoCompletoService.updateProductoCompleto(
+      Number(id),
+      dataToUpdate
+    );
+
+    res
+      .status(200)
+      .json(
+        new ResponseModel(
+          "Producto completo actualizado correctamente",
+          false,
+          200,
+          productoCompleto
+        )
+      );
+  } catch (error: any) {
+    console.error(error);
+    res
+      .status(400)
+      .json(
+        new ResponseModel(
+          error.message || "Error al actualizar producto completo",
+          true,
+          400,
+          null
+        )
+      );
+  }
 };
+
 
 // todo: Eliminar producto completo
 export const deleteProductoCompleto = async (req: Request, res: Response) => {
