@@ -17,6 +17,7 @@ import * as paisController from "../controllers/pais.controller";
 import * as colorController from "../controllers/color.controller";
 import * as productoCompletoController from "../controllers/producto_x_completo.controller";
 import * as authController from "../controllers/auth.controller";
+import * as reportController from "../controllers/report.controller";
 
 
 const router = Router();
@@ -122,6 +123,11 @@ router.get("/api/pais/:id", paisController.getPaisById);
 router.post("/api/pais", paisController.createPais);
 router.patch("/api/pais/:id", paisController.updatePais);
 router.delete("/api/pais/:id", paisController.deletePais);
+
+// --- Reportes ---
+router.get("/api/report/ventas", reportController.getSalesReportController);
+
+
 
 export default router;
 
