@@ -21,6 +21,7 @@ const mapProveedorToDTO = (proveedor: any): ProveedorDTO => ({
   },
   persona: {
     id_persona: proveedor.persona?.id_persona, 
+    cedula: proveedor.persona?.cedula,
   },
 });
 

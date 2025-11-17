@@ -5,6 +5,7 @@ export interface ProveedorDTO {
   };
   persona: {
     id_persona: number;
+    cedula?: string;
   };
 }
 
